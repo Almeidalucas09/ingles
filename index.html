@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revisão de Inglês — Vocabulário</title>
+
+  <!-- Tailwind (utilitários de classe usados no app) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React + ReactDOM + Babel (transpila o JSX direto no browser) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    html, body, #root { height: 100%; margin: 0; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="react">
+const { useState, useEffect, useMemo, useCallback, useRef } = React;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ÍCONES — SVGs inline no estilo lucide (substituem o pacote lucide-react)
+// ─────────────────────────────────────────────────────────────────────────────
+const makeIcon = (inner) => ({ size = 24, ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+    dangerouslySetInnerHTML={{ __html: inner }} {...props} />
+);
+const Volume2 = makeIcon('<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>');
+const Plus = makeIcon('<path d="M5 12h14"/><path d="M12 5v14"/>');
+const Check = makeIcon('<path d="M20 6 9 17l-5-5"/>');
+const X = makeIcon('<path d="M18 6 6 18"/><path d="M6 6l12 12"/>');
+const RotateCcw = makeIcon('<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>');
+const TrendingUp = makeIcon('<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>');
+const Bookmark = makeIcon('<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>');
+const Trash2 = makeIcon('<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>');
+const ChevronRight = makeIcon('<path d="m9 18 6-6-6-6"/>');
+const Sparkles = makeIcon('<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.962 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>');
+const Calendar = makeIcon('<rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/>');
+const Target = makeIcon('<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>');
+const Flame = makeIcon('<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>');
+const ArrowRight = makeIcon('<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>');
+const BookOpen = makeIcon('<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>');
+const Pencil = makeIcon('<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/>');
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SEED DATA — pulled from your Notion (Abril/Maio/Junho Revisão Mensal pages)
+// Sentence template uses [word] to mark the target for fill-in-blank mode
+// ─────────────────────────────────────────────────────────────────────────────
+
+const SEED = [
+  // ─── MARÇO ───
+  { id: "seed-mar-o-facilities", w: "facilities", m: "instalações", s: "The data center has world-class [facilities].", mo: "Março" },
+  { id: "seed-mar-o-bottlenecks", w: "bottlenecks", m: "gargalos do sistema", s: "We identified two [bottlenecks] in the approval flow.", mo: "Março" },
+  { id: "seed-mar-o-comprehend", w: "comprehend", m: "compreender, abranger", s: "It's hard to [comprehend] the whole architecture at once.", mo: "Março" },
+  { id: "seed-mar-o-comprehensive", w: "comprehensive", m: "abrangente", s: "We need a [comprehensive] view of all incidents.", mo: "Março" },
+  { id: "seed-mar-o-flaw", w: "flaw", m: "falha", s: "There's a [flaw] in the workflow logic.", mo: "Março" },
+  { id: "seed-mar-o-flawless", w: "flawless", m: "sem falha", s: "The deployment was [flawless] this time.", mo: "Março" },
+  { id: "seed-mar-o-hand-off", w: "hand off", m: "encaminhar, transferir", s: "I'll [hand off] this incident to the platform team.", mo: "Março" },
+  { id: "seed-mar-o-purpose-built", w: "purpose-built", m: "orientado ao propósito", s: "ServiceNow is a [purpose-built] platform for ITSM.", mo: "Março" },
+  { id: "seed-mar-o-timely", w: "timely", m: "no momento exato", s: "We need a [timely] response from the vendor.", mo: "Março" },
+  { id: "seed-mar-o-usage", w: "usage", m: "utilização", s: "We monitor license [usage] every month.", mo: "Março" },
+  { id: "seed-mar-o-get-things-done", w: "get things done", m: "realizar, fazer acontecer", s: "She really knows how to [get things done].", mo: "Março" },
+  { id: "seed-mar-o-trends", w: "trends", m: "tendências", s: "The dashboard shows incident [trends] over time.", mo: "Março" },
+  { id: "seed-mar-o-get-ahead-of", w: "get ahead of", m: "antecipar-se, ser proativo", s: "We use alerts to [get ahead of] outages.", mo: "Março" },
+  { id: "seed-mar-o-degradations", w: "degradations", m: "degradações", s: "The monitoring detected performance [degradations].", mo: "Março" },
+  { id: "seed-mar-o-surface", w: "surface", m: "trazer à tona, revelar", s: "The report helps [surface] hidden issues.", mo: "Março" },
+  { id: "seed-mar-o-cluster", w: "cluster", m: "aglomeração, agrupamento", s: "We grouped the alerts into a single [cluster].", mo: "Março" },
+  { id: "seed-mar-o-major", w: "major", m: "principal, importante", s: "This is a [major] release with breaking changes.", mo: "Março" },
+  { id: "seed-mar-o-pane-of-glass", w: "pane of glass", m: "painel único, tela única", s: "A single [pane of glass] shows every system's health.", mo: "Março" },
+  { id: "seed-mar-o-fully", w: "fully", m: "totalmente, plenamente", s: "The migration is [fully] automated now.", mo: "Março" },
+  { id: "seed-mar-o-scattered", w: "scattered", m: "espalhado", s: "The logs are [scattered] across multiple instances.", mo: "Março" },
+  { id: "seed-mar-o-as-it-moves", w: "as it moves", m: "enquanto se desloca", s: "We track the data [as it moves] between systems.", mo: "Março" },
+  { id: "seed-mar-o-proper", w: "proper", m: "apropriado, adequado", s: "Make sure the integration has [proper] error handling.", mo: "Março" },
+  { id: "seed-mar-o-on-call-schedule", w: "on-call schedule", m: "escala de sobreaviso", s: "Check the [on-call schedule] before paging someone.", mo: "Março" },
+  { id: "seed-mar-o-reliable", w: "reliable", m: "confiável", s: "We need a [reliable] backup strategy.", mo: "Março" },
+  { id: "seed-mar-o-leverage", w: "leverage", m: "alavancar, aproveitar", s: "We [leverage] automation to cut manual work.", mo: "Março" },
+  { id: "seed-mar-o-pinpoint", w: "pinpoint", m: "identificar, sinalizar", s: "The tool helps us [pinpoint] the root cause.", mo: "Março" },
+  { id: "seed-mar-o-provide", w: "provide", m: "fornecer, oferecer", s: "The vendor will [provide] the new licenses.", mo: "Março" },
+  { id: "seed-mar-o-routing", w: "routing", m: "roteamento", s: "The [routing] rules need an update.", mo: "Março" },
+  { id: "seed-mar-o-deflect", w: "deflect", m: "desviar, resolver", s: "The virtual agent can [deflect] simple tickets.", mo: "Março" },
+  { id: "seed-mar-o-inquiries", w: "inquiries", m: "chamados, consultas", s: "We handle hundreds of [inquiries] each day.", mo: "Março" },
+  { id: "seed-mar-o-the-most-out-of", w: "the most out of", m: "o máximo de algo", s: "We want to get [the most out of] our license.", mo: "Março" },
+  { id: "seed-mar-o-act-on", w: "act on", m: "agir em cima de", s: "We need to [act on] this alert immediately.", mo: "Março" },
+  { id: "seed-mar-o-go-into", w: "go into", m: "entrar em detalhes", s: "Let's not [go into] the details right now.", mo: "Março" },
+  { id: "seed-mar-o-spot", w: "spot", m: "visualizar, notar", s: "Good monitoring helps you [spot] anomalies early.", mo: "Março" },
+  { id: "seed-mar-o-patterns", w: "patterns", m: "padrões", s: "We noticed similar [patterns] across incidents.", mo: "Março" },
+  { id: "seed-mar-o-underpinning", w: "underpinning", m: "sustentação, base", s: "Data integrity is [underpinning] every decision.", mo: "Março" },
+  { id: "seed-mar-o-worked-on", w: "worked on", m: "trabalhado", s: "This is the module I [worked on] last sprint.", mo: "Março" },
+  { id: "seed-mar-o-point", w: "point", m: "apontar, indicar", s: "All metrics [point] to a memory leak.", mo: "Março" },
+  { id: "seed-mar-o-playbook", w: "playbook", m: "manual, guia", s: "Follow the incident [playbook] step by step.", mo: "Março" },
+  { id: "seed-mar-o-underlying", w: "underlying", m: "subjacente, base", s: "The [underlying] issue is poor data quality.", mo: "Março" },
+  { id: "seed-mar-o-up-to-date", w: "up to date", m: "atualizado", s: "Keep the CMDB [up to date] at all times.", mo: "Março" },
+  { id: "seed-mar-o-up-to-you", w: "up to you", m: "você decide", s: "Whether we deploy today is [up to you].", mo: "Março" },
+  { id: "seed-mar-o-shift", w: "shift", m: "plantão, turno", s: "He's on the night [shift] this week.", mo: "Março" },
+  { id: "seed-mar-o-seeing", w: "seeing", m: "observar", s: "We're [seeing] more incidents than usual.", mo: "Março" },
+  { id: "seed-mar-o-along-with", w: "along with", m: "junto com", s: "Send the report [along with] the action items.", mo: "Março" },
+  { id: "seed-mar-o-breaches", w: "breaches", m: "violações, quebras", s: "We had no security [breaches] this quarter.", mo: "Março" },
+  // ─── ABRIL ───
+  { id: "seed-abril-offloading", w: "offloading", m: "aliviar carga, transferir", s: "We're [offloading] this workload to a separate node.", mo: "Abril" },
+  { id: "seed-abril-parsing", w: "parsing", m: "análise sintática", s: "The script is [parsing] the JSON response.", mo: "Abril" },
+  { id: "seed-abril-in-order-to", w: "in order to", m: "a fim de", s: "We refactored the flow [in order to] reduce latency.", mo: "Abril" },
+  { id: "seed-abril-detrimental", w: "detrimental", m: "prejudicial", s: "Skipping tests would be [detrimental] to the release.", mo: "Abril" },
+  { id: "seed-abril-figure-out", w: "figure out", m: "entender, compreender", s: "Let me [figure out] why the workflow is failing.", mo: "Abril" },
+  { id: "seed-abril-gather", w: "gather", m: "recolher, reunir", s: "We need to [gather] more data before deciding.", mo: "Abril" },
+  { id: "seed-abril-jeopardy", w: "jeopardy", m: "risco", s: "The deadline puts the roadmap in [jeopardy].", mo: "Abril" },
+  { id: "seed-abril-break-even", w: "break even", m: "empatar (financeiro)", s: "The project should [break even] within six months.", mo: "Abril" },
+  { id: "seed-abril-turns-out", w: "turns out", m: "acabar sendo, descobre-se", s: "It [turns out] the issue was a bad token.", mo: "Abril" },
+  { id: "seed-abril-willing-to", w: "willing to", m: "disposto a", s: "Are you [willing to] take ownership of this module?", mo: "Abril" },
+  { id: "seed-abril-end-up", w: "end up", m: "acabar fazendo, terminar", s: "We will [end up] rebuilding it if we cut corners.", mo: "Abril" },
+  { id: "seed-abril-regarded", w: "regarded", m: "considerado, visto como", s: "He's [regarded] as the top architect on the team.", mo: "Abril" },
+  { id: "seed-abril-go-to-bat", w: "go to bat", m: "entrar de cabeça, defender", s: "I'll [go to bat] for this proposal in the meeting.", mo: "Abril" },
+  { id: "seed-abril-desired", w: "desired", m: "desejado", s: "We didn't get the [desired] result on the first try.", mo: "Abril" },
+  { id: "seed-abril-constraints", w: "constraints", m: "restrições, barreiras", s: "Budget [constraints] are slowing the delivery.", mo: "Abril" },
+  { id: "seed-abril-might", w: "might", m: "pode, talvez", s: "This [might] break the integration with the CMDB.", mo: "Abril" },
+  { id: "seed-abril-sample", w: "sample", m: "amostra", s: "Let me show you a [sample] of the report.", mo: "Abril" },
+  { id: "seed-abril-steer", w: "steer", m: "ter o controle, guiar", s: "The architect will [steer] the design decisions.", mo: "Abril" },
+  { id: "seed-abril-rather-than", w: "rather than", m: "em vez de", s: "We chose Flow Designer [rather than] Workflow.", mo: "Abril" },
+  { id: "seed-abril-bogged-down", w: "bogged down", m: "atolado, preso", s: "Don't get [bogged down] in details too early.", mo: "Abril" },
+  { id: "seed-abril-look-after", w: "look after", m: "tomar conta de", s: "Can you [look after] tonight's deployment?", mo: "Abril" },
+  { id: "seed-abril-deal-with", w: "deal with", m: "lidar com", s: "We need to [deal with] the tech debt this quarter.", mo: "Abril" },
+  { id: "seed-abril-fall-into-disrepair", w: "fall into disrepair", m: "cair em ruínas", s: "Without ownership, the platform will [fall into disrepair].", mo: "Abril" },
+  { id: "seed-abril-span", w: "span", m: "abranger, estender", s: "The rollout will [span] across three regions.", mo: "Abril" },
+  { id: "seed-abril-widespread", w: "widespread", m: "amplamente difundido", s: "The outage was [widespread] across all environments.", mo: "Abril" },
+  { id: "seed-abril-undertaking", w: "undertaking", m: "empreitada, atividade", s: "Migrating to Vancouver is a major [undertaking].", mo: "Abril" },
+  { id: "seed-abril-confidently", w: "confidently", m: "com confiança", s: "We can [confidently] say the issue is resolved.", mo: "Abril" },
+  { id: "seed-abril-retained", w: "retained", m: "retidos, mantidos", s: "The records are [retained] for seven years.", mo: "Abril" },
+  { id: "seed-abril-stand-for", w: "stand for", m: "representar, significar", s: "What does CMDB [stand for] again?", mo: "Abril" },
+  { id: "seed-abril-disposed", w: "disposed", m: "descartado, eliminado", s: "Old records are [disposed] after the retention period.", mo: "Abril" },
+  { id: "seed-abril-overkill", w: "overkill", m: "exagero", s: "Building a custom app for this is [overkill].", mo: "Abril" },
+  { id: "seed-abril-threshold", w: "threshold", m: "limite, limiar", s: "The CPU usage crossed the alert [threshold].", mo: "Abril" },
+  { id: "seed-abril-ratio", w: "ratio", m: "proporção, razão", s: "We track the success [ratio] of automated tickets.", mo: "Abril" },
+  { id: "seed-abril-streams", w: "streams", m: "fluxos", s: "We process two data [streams] in parallel.", mo: "Abril" },
+  { id: "seed-abril-backwards", w: "backwards", m: "para trás", s: "The new API is [backwards] compatible.", mo: "Abril" },
+  { id: "seed-abril-warehouse", w: "warehouse", m: "armazém, depósito", s: "We store historical data in a separate [warehouse].", mo: "Abril" },
+  { id: "seed-abril-arise", w: "arise", m: "surgir", s: "Issues [arise] when permissions aren't reviewed.", mo: "Abril" },
+  { id: "seed-abril-rely", w: "rely", m: "contar com, depender", s: "We [rely] on the integration to sync the data.", mo: "Abril" },
+  { id: "seed-abril-ultimately", w: "ultimately", m: "no fim das contas", s: "[Ultimately], the customer experience is what matters.", mo: "Abril" },
+  { id: "seed-abril-no-longer", w: "no longer", m: "não mais", s: "This script is [no longer] in use.", mo: "Abril" },
+  { id: "seed-abril-aware", w: "aware", m: "ciente", s: "Make sure everyone is [aware] of the change window.", mo: "Abril" },
+  { id: "seed-abril-predictive", w: "predictive", m: "preditivo", s: "We're moving toward [predictive] incident detection.", mo: "Abril" },
+  { id: "seed-abril-just-as-bad", w: "just as bad", m: "tão ruim quanto", s: "Ignoring the warning is [just as bad] as missing it.", mo: "Abril" },
+  { id: "seed-abril-fed-up", w: "fed up", m: "irritado, de saco cheio", s: "The team is [fed up] with manual approvals.", mo: "Abril" },
+  { id: "seed-abril-met", w: "met", m: "atendi, alcancei", s: "We [met] all the SLA targets this month.", mo: "Abril" },
+  { id: "seed-abril-contractor", w: "contractor", m: "terceirizado", s: "The [contractor] will handle the initial setup.", mo: "Abril" },
+  { id: "seed-abril-charter", w: "charter", m: "documento formal de escopo", s: "The project [charter] defines the scope clearly.", mo: "Abril" },
+  { id: "seed-abril-quite", w: "quite", m: "bastante, muito", s: "The new release is [quite] stable so far.", mo: "Abril" },
+  { id: "seed-abril-better-suited", w: "better suited", m: "mais adequado", s: "Flow Designer is [better suited] for modern integrations.", mo: "Abril" },
+  { id: "seed-abril-hurdle", w: "hurdle", m: "barreira, obstáculo", s: "Approvals are the biggest [hurdle] in our flow.", mo: "Abril" },
+  { id: "seed-abril-at-all", w: "at all", m: "de alguma forma (ênfase)", s: "Does this update affect production [at all]?", mo: "Abril" },
+  { id: "seed-abril-not-at-all", w: "not at all", m: "de jeito nenhum", s: "It's [not at all] what we expected.", mo: "Abril" },
+  { id: "seed-abril-likely", w: "likely", m: "provável, propenso", s: "Are you [likely] to attend the demo tomorrow?", mo: "Abril" },
+  { id: "seed-abril-scam", w: "scam", m: "golpe", s: "That email looks like a [scam], don't open it.", mo: "Abril" },
+  { id: "seed-abril-liability", w: "liability", m: "passivo, risco", s: "Unmaintained scripts are a [liability].", mo: "Abril" },
+  { id: "seed-abril-start-off", w: "start off", m: "começar do zero", s: "Let's [start off] with a quick recap.", mo: "Abril" },
+  { id: "seed-abril-appliances", w: "appliances", m: "dispositivos, aparelhos", s: "We connected the IoT [appliances] to the platform.", mo: "Abril" },
+  { id: "seed-abril-come-across", w: "come across", m: "se deparar com", s: "Did you [come across] any blockers during testing?", mo: "Abril" },
+  { id: "seed-abril-either-one", w: "either one", m: "qualquer um", s: "[Either one] of those solutions will work.", mo: "Abril" },
+  { id: "seed-abril-regarding", w: "regarding", m: "a respeito de", s: "[Regarding] the deadline, we may need an extension.", mo: "Abril" },
+  { id: "seed-abril-statement", w: "statement", m: "declaração", s: "The [statement] clarifies the new policy.", mo: "Abril" },
+  { id: "seed-abril-lightweight", w: "lightweight", m: "peso leve", s: "We chose a [lightweight] framework for this service.", mo: "Abril" },
+  { id: "seed-abril-steward", w: "steward", m: "administrador, custodiante", s: "He acts as the data [steward] for the CMDB.", mo: "Abril" },
+  { id: "seed-abril-prescriptive", w: "prescriptive", m: "prescritivo, recomendado", s: "ITIL is more [prescriptive] than agile frameworks.", mo: "Abril" },
+  { id: "seed-abril-standing-still", w: "standing still", m: "ficar parado", s: "The market isn't [standing still], we need to move.", mo: "Abril" },
+  { id: "seed-abril-turn-into", w: "turn into", m: "transformar em", s: "We [turn into] production apps what start as prototypes.", mo: "Abril" },
+  { id: "seed-abril-managerial", w: "managerial", m: "gerencial", s: "She moved into a [managerial] role last year.", mo: "Abril" },
+  { id: "seed-abril-tailor", w: "tailor", m: "customizar", s: "We can [tailor] the workflow to each department.", mo: "Abril" },
+  { id: "seed-abril-tailor-made", w: "tailor-made", m: "sob medida", s: "This is a [tailor-made] solution for your team.", mo: "Abril" },
+  // ─── MAIO ───
+  { id: "seed-maio-outline", w: "outline", m: "definir, esboçar", s: "Can you [outline] the steps for the rollout?", mo: "Maio" },
+  { id: "seed-maio-several", w: "several", m: "vários", s: "We tested [several] approaches before choosing one.", mo: "Maio" },
+  { id: "seed-maio-so-far", w: "so far", m: "até agora", s: "The release is stable [so far].", mo: "Maio" },
+  { id: "seed-maio-as-long-as", w: "as long as", m: "desde que, já que", s: "It works [as long as] the token is valid.", mo: "Maio" },
+  { id: "seed-maio-laid", w: "laid", m: "colocou, montou", s: "The architect [laid] the groundwork for the migration.", mo: "Maio" },
+  { id: "seed-maio-lay", w: "lay", m: "colocar (algo importante)", s: "We need to [lay] a solid foundation first.", mo: "Maio" },
+  { id: "seed-maio-as-well", w: "as well", m: "também", s: "We're tracking that metric [as well].", mo: "Maio" },
+  { id: "seed-maio-for-instance", w: "for instance", m: "por exemplo", s: "Some flows fail silently, [for instance] this one.", mo: "Maio" },
+  { id: "seed-maio-be-able", w: "be able", m: "ser capaz, ser apto", s: "You should [be able] to deploy without downtime.", mo: "Maio" },
+  { id: "seed-maio-dozens", w: "dozens", m: "dezenas", s: "We migrated [dozens] of legacy scripts.", mo: "Maio" },
+  { id: "seed-maio-tip", w: "tip", m: "dica, gorjeta, ponta", s: "Here's a quick [tip] to speed up the query.", mo: "Maio" },
+  { id: "seed-maio-compelling", w: "compelling", m: "convincente, útil", s: "The business case is [compelling] enough.", mo: "Maio" },
+  { id: "seed-maio-sell", w: "sell", m: "vender", s: "We still need to [sell] the idea to leadership.", mo: "Maio" },
+  { id: "seed-maio-as-well-as", w: "as well as", m: "assim como", s: "We support email [as well as] Slack notifications.", mo: "Maio" },
+  { id: "seed-maio-loose", w: "loose", m: "solto, frouxo", s: "The integration has a few [loose] ends to fix.", mo: "Maio" },
+  { id: "seed-maio-lose", w: "lose", m: "perder", s: "We can't [lose] this data during the migration.", mo: "Maio" },
+  { id: "seed-maio-throughout", w: "throughout", m: "por toda (extensão)", s: "The change applies [throughout] the platform.", mo: "Maio" },
+  { id: "seed-maio-the-one", w: "the one", m: "aquele", s: "This is [the one] that keeps failing.", mo: "Maio" },
+  { id: "seed-maio-underneath", w: "underneath", m: "embaixo, sob (formal)", s: "There's a deeper problem [underneath] this incident.", mo: "Maio" },
+  { id: "seed-maio-cover", w: "cover", m: "cobertura, capa, cobrir", s: "This policy doesn't [cover] custom apps.", mo: "Maio" },
+  { id: "seed-maio-just", w: "just", m: "somente, apenas", s: "It's [just] a configuration change.", mo: "Maio" },
+  { id: "seed-maio-as-with", w: "as with", m: "tal como, igual a", s: "[As with] most migrations, expect surprises.", mo: "Maio" },
+  { id: "seed-maio-business-hours", w: "business hours", m: "horário comercial", s: "Support is available during [business hours].", mo: "Maio" },
+  { id: "seed-maio-a-number-of", w: "a number of", m: "vários", s: "We hit [a number of] blockers this sprint.", mo: "Maio" },
+  { id: "seed-maio-these", w: "these", m: "estes (recém-mencionados)", s: "[These] are the issues we just discussed.", mo: "Maio" },
+  { id: "seed-maio-those", w: "those", m: "aqueles (antigos)", s: "[Those] old scripts are no longer maintained.", mo: "Maio" },
+  { id: "seed-maio-encompasses", w: "encompasses", m: "abrange", s: "The platform [encompasses] ITSM, ITOM, and HR.", mo: "Maio" },
+  { id: "seed-maio-compass", w: "compass", m: "bússola", s: "Customer feedback is our [compass].", mo: "Maio" },
+  { id: "seed-maio-instance", w: "instance", m: "instância, momento", s: "We spun up a new [instance] for testing.", mo: "Maio" },
+  { id: "seed-maio-made-up-of", w: "made up of", m: "composto por", s: "The team is [made up of] five engineers and a PM.", mo: "Maio" },
+  { id: "seed-maio-made-up-my-mind", w: "made up my mind", m: "tomei minha decisão", s: "I've [made up my mind] about the new approach.", mo: "Maio" },
+  { id: "seed-maio-changed-my-mind", w: "changed my mind", m: "mudei de ideia", s: "I [changed my mind] after seeing the numbers.", mo: "Maio" },
+  { id: "seed-maio-middleware", w: "middleware", m: "intermediário (software)", s: "We use [middleware] to translate between systems.", mo: "Maio" },
+  { id: "seed-maio-patch", w: "patch", m: "corrigir, remendar", s: "We need to [patch] the vulnerability today.", mo: "Maio" },
+  { id: "seed-maio-vendor", w: "vendor", m: "fornecedor", s: "The [vendor] released a new version last week.", mo: "Maio" },
+  { id: "seed-maio-lets", w: "lets", m: "permite", s: "This [lets] us automate the entire approval flow.", mo: "Maio" },
+  { id: "seed-maio-deep-dive", w: "deep dive", m: "mergulho profundo", s: "Let's schedule a [deep dive] on this topic.", mo: "Maio" },
+  { id: "seed-maio-dive", w: "dive", m: "mergulhar", s: "Let's [dive] into the logs together.", mo: "Maio" },
+  { id: "seed-maio-principles", w: "principles", m: "princípios", s: "We follow clear design [principles].", mo: "Maio" },
+  { id: "seed-maio-current", w: "current", m: "atual", s: "The [current] version has a known bug.", mo: "Maio" },
+  { id: "seed-maio-currently", w: "currently", m: "atualmente", s: "We're [currently] running on the old release.", mo: "Maio" },
+  { id: "seed-maio-actual", w: "actual", m: "real, verdadeiro", s: "Tell me the [actual] numbers, not the estimate.", mo: "Maio" },
+  { id: "seed-maio-actually", w: "actually", m: "na verdade", s: "It [actually] works better than we expected.", mo: "Maio" },
+  { id: "seed-maio-there-s-no-point", w: "there's no point", m: "não tem sentido", s: "[There's no point] fixing it before the rewrite.", mo: "Maio" },
+  { id: "seed-maio-far-reaching", w: "far-reaching", m: "de longo alcance", s: "This change has [far-reaching] consequences.", mo: "Maio" },
+  { id: "seed-maio-tackling", w: "tackling", m: "enfrentando, abordando", s: "We're [tackling] the legacy code this sprint.", mo: "Maio" },
+  { id: "seed-maio-evolve", w: "evolve", m: "evoluir", s: "The platform continues to [evolve] every release.", mo: "Maio" },
+  { id: "seed-maio-scarf", w: "scarf", m: "cachecol", s: "She wore a thick [scarf] in Tokyo.", mo: "Maio" },
+  { id: "seed-maio-effort", w: "effort", m: "esforço", s: "This migration took a lot of [effort].", mo: "Maio" },
+  { id: "seed-maio-expended", w: "expended", m: "gasto, despendido", s: "A lot of energy was [expended] on this fix.", mo: "Maio" },
+  { id: "seed-maio-as", w: "as", m: "à medida que, já que", s: "The volume grew [as] we onboarded more clients.", mo: "Maio" },
+  { id: "seed-maio-while", w: "while", m: "enquanto", s: "Run the backup [while] the system is idle.", mo: "Maio" },
+  { id: "seed-maio-supply", w: "supply", m: "fornecer", s: "The vendor will [supply] the new licenses.", mo: "Maio" },
+  { id: "seed-maio-across", w: "across", m: "através de, por toda", s: "The change rolled out [across] all regions.", mo: "Maio" },
+  { id: "seed-maio-through", w: "through", m: "através de (algo fechado)", s: "The request goes [through] the API gateway.", mo: "Maio" },
+  { id: "seed-maio-though", w: "though", m: "embora", s: "It works, [though] it's a bit slow.", mo: "Maio" },
+  { id: "seed-maio-thought", w: "thought", m: "pensamento, pensei", s: "That's a good [thought], let's explore it.", mo: "Maio" },
+  { id: "seed-maio-thorough", w: "thorough", m: "completo, minucioso", s: "We did a [thorough] review of the code.", mo: "Maio" },
+  { id: "seed-maio-thoroughly", w: "thoroughly", m: "completamente", s: "Test it [thoroughly] before release.", mo: "Maio" },
+  { id: "seed-maio-meanwhile", w: "meanwhile", m: "enquanto isso", s: "[Meanwhile], the team kept monitoring the logs.", mo: "Maio" },
+  { id: "seed-maio-within", w: "within", m: "dentro de", s: "We resolved it [within] the SLA window.", mo: "Maio" },
+  { id: "seed-maio-without", w: "without", m: "sem", s: "We deployed [without] any downtime.", mo: "Maio" },
+  { id: "seed-maio-future-proof", w: "future-proof", m: "à prova de futuro", s: "We want a [future-proof] architecture.", mo: "Maio" },
+  { id: "seed-maio-waterproof", w: "waterproof", m: "à prova d'água", s: "The device is [waterproof] up to two meters.", mo: "Maio" },
+  { id: "seed-maio-bulletproof", w: "bulletproof", m: "à prova de falhas", s: "The rollback plan is [bulletproof].", mo: "Maio" },
+  { id: "seed-maio-shipping", w: "shipping", m: "transporte, envio", s: "[Shipping] times improved after the integration.", mo: "Maio" },
+  { id: "seed-maio-regardless", w: "regardless", m: "independentemente", s: "We'll deliver [regardless] of the blockers.", mo: "Maio" },
+  { id: "seed-maio-grassroots", w: "grassroots", m: "de base, raiz", s: "This started as a [grassroots] internal project.", mo: "Maio" },
+  { id: "seed-maio-look-like", w: "look like", m: "parecer, aparentar", s: "The logs [look like] a memory leak.", mo: "Maio" },
+  { id: "seed-maio-lack", w: "lack", m: "falta de", s: "There's a [lack] of clear documentation.", mo: "Maio" },
+  { id: "seed-maio-despite", w: "despite", m: "apesar de", s: "[Despite] the delays, we shipped on time.", mo: "Maio" },
+  { id: "seed-maio-siloed", w: "siloed", m: "isolado, em silos", s: "The data is [siloed] across departments.", mo: "Maio" },
+  { id: "seed-maio-outdated", w: "outdated", m: "desatualizado", s: "The integration relies on an [outdated] API.", mo: "Maio" },
+  { id: "seed-maio-in-a-timely-manner", w: "in a timely manner", m: "em tempo hábil", s: "Please respond [in a timely manner].", mo: "Maio" },
+  { id: "seed-maio-shipment", w: "shipment", m: "remessa", s: "The [shipment] was tracked end to end.", mo: "Maio" },
+  { id: "seed-maio-retail", w: "retail", m: "varejo", s: "We built this for a [retail] organization.", mo: "Maio" },
+  { id: "seed-maio-evaluated", w: "evaluated", m: "avaliado", s: "Each vendor was carefully [evaluated].", mo: "Maio" },
+  { id: "seed-maio-launch", w: "launch", m: "lançar", s: "We plan to [launch] the feature next month.", mo: "Maio" },
+  { id: "seed-maio-compress", w: "compress", m: "comprimir", s: "We [compress] the payload before sending it.", mo: "Maio" },
+  { id: "seed-maio-accountable", w: "accountable", m: "responsável", s: "One owner should be [accountable] for each service.", mo: "Maio" },
+  { id: "seed-maio-retrieve", w: "retrieve", m: "recuperar", s: "The script can [retrieve] archived records.", mo: "Maio" },
+  { id: "seed-maio-complain", w: "complain", m: "reclamar", s: "Users [complain] about the slow load times.", mo: "Maio" },
+  { id: "seed-maio-scan", w: "scan", m: "escanear, digitalizar", s: "The tool will [scan] for vulnerabilities nightly.", mo: "Maio" },
+  { id: "seed-maio-traverse", w: "traverse", m: "atravessar, percorrer", s: "The request has to [traverse] several services.", mo: "Maio" },
+  { id: "seed-maio-suited", w: "suited", m: "adequado", s: "This tool is well [suited] for the job.", mo: "Maio" },
+  { id: "seed-maio-attempts", w: "attempts", m: "tentativas", s: "We log all failed login [attempts].", mo: "Maio" },
+  { id: "seed-maio-beanie", w: "beanie", m: "gorro", s: "He packed a [beanie] for the cold mornings.", mo: "Maio" },
+  { id: "seed-maio-few", w: "few", m: "pouquíssimos", s: "[Few] teams have adopted it so far.", mo: "Maio" },
+  { id: "seed-maio-a-few", w: "a few", m: "poucos (ideia positiva)", s: "We found [a few] good workarounds.", mo: "Maio" },
+  { id: "seed-maio-not-enough", w: "not enough", m: "não suficiente", s: "One engineer is [not enough] for this project.", mo: "Maio" },
+  { id: "seed-maio-little", w: "little", m: "insuficiente (singular)", s: "There's [little] time left before the deadline.", mo: "Maio" },
+  { id: "seed-maio-a-little", w: "a little", m: "pouco mas dá (singular)", s: "We have [a little] room in the budget.", mo: "Maio" },
+  { id: "seed-maio-bespoke", w: "bespoke", m: "sob medida, personalizado", s: "They offer a [bespoke] retail experience.", mo: "Maio" },
+  { id: "seed-maio-fill", w: "fill", m: "preencher", s: "Please [fill] the required fields.", mo: "Maio" },
+  { id: "seed-maio-refill", w: "refill", m: "reencher", s: "The form lets you [refill] the previous values.", mo: "Maio" },
+  { id: "seed-maio-disparate", w: "disparate", m: "díspar, diferente", s: "We unified [disparate] data sources.", mo: "Maio" },
+  { id: "seed-maio-championed", w: "championed", m: "defendido, apoiado", s: "She [championed] the automation initiative.", mo: "Maio" },
+  { id: "seed-maio-referred", w: "referred", m: "referido, encaminhado", s: "The ticket was [referred] to the right team.", mo: "Maio" },
+  { id: "seed-maio-compliant", w: "compliant", m: "em conformidade", s: "The process is fully [compliant] with the policy.", mo: "Maio" },
+  { id: "seed-maio-over-time", w: "over time", m: "com o passar do tempo", s: "The platform improved [over time].", mo: "Maio" },
+  { id: "seed-maio-upon", w: "upon", m: "sobre, ao", s: "The flow triggers [upon] approval.", mo: "Maio" },
+  { id: "seed-maio-retailer", w: "retailer", m: "varejista", s: "The client is a large global [retailer].", mo: "Maio" },
+  { id: "seed-maio-even-though", w: "even though", m: "embora, mesmo que", s: "It shipped [even though] we hit blockers.", mo: "Maio" },
+  { id: "seed-maio-streamline", w: "streamline", m: "simplificar, agilizar", s: "We want to [streamline] the approval process.", mo: "Maio" },
+  { id: "seed-maio-raw", w: "raw", m: "cru", s: "We store the [raw] data before processing it.", mo: "Maio" },
+  { id: "seed-maio-raw-material", w: "raw material", m: "matéria-prima", s: "The vendor supplies the [raw material].", mo: "Maio" },
+  { id: "seed-maio-fast", w: "fast", m: "rápido, jejum", s: "The new query is twice as [fast].", mo: "Maio" },
+  { id: "seed-maio-lent", w: "lent", m: "quaresma", s: "People often fast during [lent].", mo: "Maio" },
+  { id: "seed-maio-beyond", w: "beyond", m: "além de", s: "The impact goes [beyond] this single team.", mo: "Maio" },
+  { id: "seed-maio-encapsulate", w: "encapsulate", m: "encapsular, conter", s: "Each module should [encapsulate] its own logic.", mo: "Maio" },
+  { id: "seed-maio-case", w: "case", m: "caso, estojo", s: "Let's review this edge [case] together.", mo: "Maio" },
+  { id: "seed-maio-broad", w: "broad", m: "amplo", s: "We took a [broad] view of the architecture.", mo: "Maio" },
+  { id: "seed-maio-off-topic", w: "off topic", m: "fora do assunto", s: "That's a bit [off topic] for this meeting.", mo: "Maio" },
+  { id: "seed-maio-throughput", w: "throughput", m: "vazão, métrica de sucesso", s: "We measure the system's [throughput] per hour.", mo: "Maio" },
+  { id: "seed-maio-outcomes", w: "outcomes", m: "resultados", s: "We focus on business [outcomes], not just output.", mo: "Maio" },
+  { id: "seed-maio-benchmark", w: "benchmark", m: "referência, comparativo", s: "We ran a [benchmark] against the old version.", mo: "Maio" },
+  { id: "seed-maio-market-share", w: "market share", m: "fatia de mercado", s: "The product gained [market share] last year.", mo: "Maio" },
+  { id: "seed-maio-manufacturing", w: "manufacturing", m: "manufatura, produção", s: "The platform supports [manufacturing] workflows.", mo: "Maio" },
+  { id: "seed-maio-wholesale", w: "wholesale", m: "atacado", s: "They sell both [wholesale] and retail.", mo: "Maio" },
+  { id: "seed-maio-ground", w: "ground", m: "terra, base", s: "The decision is on solid [ground].", mo: "Maio" },
+  { id: "seed-maio-ground-floor", w: "ground floor", m: "térreo", s: "The office is on the [ground floor].", mo: "Maio" },
+  { id: "seed-maio-grounded-in", w: "grounded in", m: "baseado em", s: "The strategy is [grounded in] real data.", mo: "Maio" },
+  { id: "seed-maio-wireless", w: "wireless", m: "sem fio", s: "The devices use a [wireless] connection.", mo: "Maio" },
+  { id: "seed-maio-wired", w: "wired", m: "com fio, cabeado", s: "The server uses a [wired] connection.", mo: "Maio" },
+  { id: "seed-maio-iot", w: "IoT", m: "internet das coisas", s: "We connected the [IoT] sensors to the platform.", mo: "Maio" },
+  { id: "seed-maio-branch", w: "branch", m: "filial, ramo", s: "Each [branch] runs its own instance.", mo: "Maio" },
+  { id: "seed-maio-business-driver", w: "business driver", m: "condutor de negócio", s: "Cost reduction is the main [business driver].", mo: "Maio" },
+  { id: "seed-maio-sparingly", w: "sparingly", m: "com moderação", s: "Use custom scripts [sparingly].", mo: "Maio" },
+  { id: "seed-maio-raises", w: "raises", m: "levanta, aumenta", s: "This [raises] a few concerns about security.", mo: "Maio" },
+  { id: "seed-maio-deserved", w: "deserved", m: "merecido", s: "The team [deserved] the recognition.", mo: "Maio" },
+  { id: "seed-maio-task-force", w: "task force", m: "força-tarefa", s: "We created a [task force] for the migration.", mo: "Maio" },
+  { id: "seed-maio-multitask", w: "multitask", m: "multitarefa", s: "The system can [multitask] across queues.", mo: "Maio" },
+  { id: "seed-maio-engineering", w: "engineering", m: "engenharia", s: "The [engineering] team owns the platform.", mo: "Maio" },
+  { id: "seed-maio-engineer", w: "engineer", m: "engenheiro", s: "Each [engineer] reviews their own pull request.", mo: "Maio" },
+  { id: "seed-maio-architecture", w: "architecture", m: "arquitetura", s: "The [architecture] needs a full review.", mo: "Maio" },
+  { id: "seed-maio-architect", w: "architect", m: "arquiteto", s: "The [architect] approved the design.", mo: "Maio" },
+  { id: "seed-maio-further", w: "further", m: "mais a fundo", s: "Let's discuss this [further] next week.", mo: "Maio" },
+  { id: "seed-maio-intrinsic", w: "intrinsic", m: "intrínseco", s: "Security is [intrinsic] to the platform.", mo: "Maio" },
+  { id: "seed-maio-may-still", w: "may still", m: "ainda pode", s: "The old flow [may still] be running.", mo: "Maio" },
+  { id: "seed-maio-as-before", w: "as before", m: "como antes", s: "The system behaves [as before] after the rollback.", mo: "Maio" },
+  { id: "seed-maio-summary", w: "summary", m: "resumo", s: "Send me a quick [summary] of the meeting.", mo: "Maio" },
+  { id: "seed-maio-resume", w: "resume", m: "retomar", s: "Let's [resume] the deployment after lunch.", mo: "Maio" },
+  { id: "seed-maio-r-sum", w: "résumé", m: "currículo", s: "Update your [résumé] before applying.", mo: "Maio" },
+  { id: "seed-maio-layer", w: "layer", m: "camada", s: "We added a caching [layer] for speed.", mo: "Maio" },
+  { id: "seed-maio-layout", w: "layout", m: "disposição, layout", s: "The dashboard [layout] is easy to read.", mo: "Maio" },
+  { id: "seed-maio-label", w: "label", m: "rótulo, etiqueta", s: "Each record needs a clear [label].", mo: "Maio" },
+  { id: "seed-maio-software-bill", w: "software bill", m: "fatura/composição de software", s: "The [software bill] lists every dependency.", mo: "Maio" },
+  { id: "seed-maio-tackle", w: "tackle", m: "controlar, enfrentar", s: "Let's [tackle] the hardest task first.", mo: "Maio" },
+  { id: "seed-maio-manners", w: "manners", m: "modos, maneiras", s: "Good table [manners] matter abroad.", mo: "Maio" },
+  { id: "seed-maio-whenever", w: "whenever", m: "sempre que", s: "Call me [whenever] the build fails.", mo: "Maio" },
+  { id: "seed-maio-wherever", w: "wherever", m: "onde quer que", s: "It runs [wherever] Node is installed.", mo: "Maio" },
+  { id: "seed-maio-comply", w: "comply", m: "cumprir, obedecer", s: "All vendors must [comply] with the policy.", mo: "Maio" },
+  { id: "seed-maio-achievement", w: "achievement", m: "conquista", s: "Shipping on time was a real [achievement].", mo: "Maio" },
+  { id: "seed-maio-threats", w: "threats", m: "ameaças", s: "The scan flagged several security [threats].", mo: "Maio" },
+  { id: "seed-maio-bomb", w: "bomb", m: "bomba", s: "The release was a total [bomb], we rolled back.", mo: "Maio" },
+  { id: "seed-maio-response", w: "response", m: "resposta", s: "We measure the average [response] time.", mo: "Maio" },
+  { id: "seed-maio-enterprise-wide", w: "enterprise-wide", m: "por toda a empresa", s: "We rolled it out [enterprise-wide].", mo: "Maio" },
+  { id: "seed-maio-offers", w: "offers", m: "ofertas, promoções", s: "The portal shows personalized [offers].", mo: "Maio" },
+  { id: "seed-maio-witness", w: "witness", m: "testemunhar", s: "We didn't [witness] any errors during the test.", mo: "Maio" },
+  { id: "seed-maio-sign", w: "sign", m: "assinar, sinal", s: "Please [sign] the change request.", mo: "Maio" },
+  { id: "seed-maio-signature", w: "signature", m: "assinatura", s: "We need your [signature] to approve it.", mo: "Maio" },
+  { id: "seed-maio-outdoor", w: "outdoor", m: "ao ar livre", s: "The hotel has an [outdoor] pool.", mo: "Maio" },
+  { id: "seed-maio-indoor", w: "indoor", m: "em ambiente fechado", s: "There's an [indoor] gym on site.", mo: "Maio" },
+  { id: "seed-maio-mount", w: "mount", m: "montanha, montar", s: "Mount Fuji is a famous [mount] in Japan.", mo: "Maio" },
+  { id: "seed-maio-press", w: "press", m: "imprensa, pressionar", s: "The [press] covered the product launch.", mo: "Maio" },
+  { id: "seed-maio-duty", w: "duty", m: "obrigação, dever", s: "It's our [duty] to keep the data safe.", mo: "Maio" },
+  { id: "seed-maio-duty-free", w: "duty-free", m: "livre de impostos", s: "I bought it at the [duty-free] shop.", mo: "Maio" },
+  // ─── JUNHO ───
+  { id: "seed-junho-spell", w: "spell", m: "soletrar", s: "Could you [spell] your last name, please?", mo: "Junho" },
+  { id: "seed-junho-citizenship", w: "citizenship", m: "cidadania", s: "I'm applying for dual [citizenship].", mo: "Junho" },
+  { id: "seed-junho-nationality", w: "nationality", m: "nacionalidade", s: "Please state your [nationality] on the form.", mo: "Junho" },
+  { id: "seed-junho-sightsee", w: "sightsee", m: "passear, fazer turismo", s: "We had a free day to [sightsee] in Tokyo.", mo: "Junho" },
+  { id: "seed-junho-wellness", w: "wellness", m: "bem-estar", s: "The hotel has a [wellness] center.", mo: "Junho" },
+  { id: "seed-junho-bespoke-retail", w: "bespoke retail", m: "varejo personalizado", s: "They offer a [bespoke retail] experience.", mo: "Junho" },
+  { id: "seed-junho-landmark", w: "landmark", m: "local importante", s: "The temple is a famous [landmark].", mo: "Junho" },
+  { id: "seed-junho-encircled", w: "encircled", m: "cercado", s: "The garden is [encircled] by old walls.", mo: "Junho" },
+  { id: "seed-junho-refined", w: "refined", m: "refinado", s: "The lobby has a [refined] atmosphere.", mo: "Junho" },
+  { id: "seed-junho-thoughtfully", w: "thoughtfully", m: "cuidadosamente, planejadamente", s: "The space was [thoughtfully] designed.", mo: "Junho" },
+  { id: "seed-junho-featuring", w: "featuring", m: "apresentando", s: "A restaurant [featuring] local dishes.", mo: "Junho" },
+  { id: "seed-junho-setting", w: "setting", m: "local, ambiente", s: "The hotel is in a peaceful [setting].", mo: "Junho" },
+  { id: "seed-junho-warm", w: "warm", m: "acolhedor, quente", s: "The lounge has a [warm] atmosphere.", mo: "Junho" },
+  { id: "seed-junho-beverages", w: "beverages", m: "bebidas", s: "Complimentary [beverages] are served all day.", mo: "Junho" },
+  { id: "seed-junho-bite", w: "bite", m: "mordida, lanche rápido", s: "Let's grab a quick [bite] before the flight.", mo: "Junho" },
+  { id: "seed-junho-amenities", w: "amenities", m: "amenidades, comodidades", s: "The room includes all the usual [amenities].", mo: "Junho" },
+  { id: "seed-junho-bathrobe", w: "bathrobe", m: "roupão", s: "A soft [bathrobe] is provided in the room.", mo: "Junho" },
+  { id: "seed-junho-hair-dryer", w: "hair dryer", m: "secador de cabelo", s: "Every room has a [hair dryer].", mo: "Junho" },
+  { id: "seed-junho-unwind", w: "unwind", m: "relaxar", s: "The spa is a great place to [unwind].", mo: "Junho" },
+  { id: "seed-junho-calming-retreat", w: "calming retreat", m: "retiro calmo", s: "The resort is a [calming retreat] from the city.", mo: "Junho" },
+];
+
+const MONTHS = ["Março", "Abril", "Maio", "Junho"];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DICAS — grammar / usage notes pulled from your Notion (not flashcard material)
+// ─────────────────────────────────────────────────────────────────────────────
+const DICAS = [
+  {
+    group: "Confusões comuns",
+    items: [
+      { title: "then vs them", body: "then = então / naquela época. them = eles/elas como objeto (I love them)." },
+      { title: "matter vs import", body: "matter = importar, ter importância (pode ser \"problema\"). import = importar no sentido de trazer." },
+      { title: "gain vs win", body: "gain = ganhar adicionando, sem derrotar. win = ganhar derrotando um oponente." },
+      { title: "gross vs net", body: "gross = bruto, net = líquido. gross/net profit = lucro bruto/líquido." },
+      { title: "means / to mean / meaning", body: "means = meio(s). to mean = significar. meaning = significado. meaningful = significativo." },
+      { title: "its vs it's", body: "its = posse de objeto/lugar (at its peak). it's = it is ou it has." },
+      { title: "worth / worthless / worthy", body: "worth = valor. worthless = sem valor. worthy = digno, com valor." },
+      { title: "loose vs lose", body: "loose = solto, frouxo. lose = perder." },
+      { title: "few / a few / little / a little", body: "few = pouquíssimos. a few = poucos (positivo). little = insuficiente (singular). a little = pouco mas dá." },
+      { title: "lack vs gap", body: "lack = falta de tudo. gap = falta de algo específico." },
+      { title: "this vs those", body: "this = presente / algo recém-citado. those = passado / conceitos antigos." },
+      { title: "pretend vs intend", body: "pretend = fingir (nunca é \"pretender\"). intend = pretender." },
+      { title: "waste vs spend", body: "waste = gastar tempo/dinheiro (sentido negativo). spend = gastar (normalmente neutro)." },
+      { title: "seek / search for / find", body: "seek e search for = procurar, buscar. find = encontrar. look for ≠ olhar para (isso é look at)." },
+      { title: "can vs could", body: "can you = você pode (presente). could you = você poderia (mais gentil)." },
+      { title: "want vs would like", body: "I want = eu quero (evite). I would like = eu gostaria (gentil, profissional)." },
+    ],
+  },
+  {
+    group: "Verbos irregulares",
+    items: [
+      { title: "drive / drove / driven", body: "dirigir / dirigiu / dirigido." },
+      { title: "ride / rode / ridden", body: "andar (bike, cavalo) / andou / andado." },
+      { title: "hide / hid / hidden", body: "esconder / escondeu / escondido." },
+      { title: "arise / arose / arisen", body: "surgir / surgiu / surgido." },
+      { title: "rise / rose / risen", body: "subir, levantar / subiu / subido." },
+      { title: "grow / grew / grown", body: "crescer / cresceu / crescido." },
+      { title: "fly / flew / flown", body: "voar, viajar / voou / voado." },
+      { title: "draw / drew / drawn", body: "desenhar, sacar, empatar / desenhou / desenhado." },
+      { title: "know / knew / known", body: "saber, conhecer / soube / conhecido." },
+    ],
+  },
+  {
+    group: "Regras e padrões",
+    items: [
+      { title: "verbo + off = começar do zero", body: "kick off, start off — a ideia é iniciar do zero." },
+      { title: "information & equipment", body: "Não levam \"s\" no plural, mesmo se referindo a várias coisas." },
+      { title: "has been + -ing", body: "Passa sensação de muito tempo: How long have you been working in ServiceNow?" },
+      { title: "just + passado = acabar de", body: "just married = acabaram de casar; just did = acabei de fazer." },
+      { title: "purchased vs have purchased", body: "You purchased = comprou (pode ter sido há tempo). You've purchased = comprou há pouco." },
+      { title: "in order to = a fim de", body: "in order to create value = a fim de criar valor." },
+      { title: "don't even = nem", body: "you don't even know = você nem sabe; I didn't even travel = eu nem viajei." },
+      { title: "for + verbo = -ing", body: "Quando o \"for\" vem antes do verbo, o verbo ganha -ing: for maintaining." },
+      { title: "do + verbo = ênfase", body: "do/did antes do verbo = realmente: I do speak Spanish; I did go to the event." },
+      { title: "news é singular", body: "Com \"news\" a tradução é sempre singular. \"new\" pode ser singular ou plural." },
+      { title: "sufixos de amplitude", body: "-hood (brotherhood), -ness (loneliness), -ship (relationship)." },
+      { title: "contrações faladas", body: "gonna = going to; gotta = (have) got to; wanna = want to; lemme = let me; gimme = give me." },
+      { title: "\"h\" mudo vs com som de r", body: "honest/hour = h mudo (vem com \"on\"). half = h soa como r (vem com \"a\")." },
+    ],
+  },
+  {
+    group: "Pronúncia",
+    items: [
+      { title: "launch", body: "som de \"lôntch\" — lançar.", speak: "launch" },
+      { title: "lunch", body: "som de \"lântch\" — almoço.", speak: "lunch" },
+      { title: "audit", body: "som de \"ódit\" — auditoria.", speak: "audit" },
+      { title: "success", body: "2 \"c\" tem som de \"qui\".", speak: "success" },
+      { title: "breathe", body: "som tipo \"bríðe\" — respirar (verbo).", speak: "breathe" },
+      { title: "version", body: "som tipo \"vér-jan\".", speak: "version" },
+      { title: "sion = jan", body: "vision = vi-jan; decision = deci-jan.", speak: "decision" },
+      { title: "tion = tchan", body: "nation = nei-tchan.", speak: "nation" },
+      { title: "ssion = chan", body: "mission = mi-chan.", speak: "mission" },
+      { title: "oo = u", body: "look, book = som de \"u\". Exceções: blood, flood (som de ô).", speak: "look" },
+      { title: "au / aw = ó", body: "law, flaw, raw, Austin — som de \"ó\".", speak: "flaw" },
+      { title: "\"a\" no meio de 3 letras = é", body: "cap, gap, task, flash — som de \"é\". O \"r\" quebra a regra (car, bar).", speak: "task" },
+    ],
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SPACED REPETITION — simple SM2-inspired intervals (in days)
+// ─────────────────────────────────────────────────────────────────────────────
+const INTERVALS = [0, 1, 3, 7, 14, 30]; // days for mastery levels 0-5
+const dayMs = 24 * 60 * 60 * 1000;
+const today0 = () => { const d = new Date(); d.setHours(0,0,0,0); return d.getTime(); };
+
+function reviewWord(word, gotIt) {
+  const now = Date.now();
+  const next = { ...word, lastSeen: now, seen: (word.seen || 0) + 1 };
+  if (gotIt) {
+    next.correct = (next.correct || 0) + 1;
+    next.mastery = Math.min(5, (next.mastery || 0) + 1);
+    next.nextDue = today0() + INTERVALS[next.mastery] * dayMs;
+    // If mastered enough, remove from notes
+    if (next.mastery >= 3) next.inNotes = false;
+  } else {
+    next.mastery = Math.max(0, (next.mastery || 0) - 1);
+    next.nextDue = today0() + 1 * dayMs;
+    next.inNotes = true;
+  }
+  return next;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STORAGE — agora usa localStorage do browser (persiste entre sessões/abas)
+// ─────────────────────────────────────────────────────────────────────────────
+const STORAGE_KEY = "vocab-review-state";
+const API_KEY_KEY = "anthropic-api-key";
+const VERSION = 2;
+
+function buildInitialState() {
+  const t = today0();
+  return {
+    version: VERSION,
+    words: SEED.map((s) => ({
+      id: s.id,
+      word: s.w,
+      meaning: s.m,
+      sentence: s.s,
+      month: s.mo,
+      mastery: 0,
+      seen: 0,
+      correct: 0,
+      lastSeen: null,
+      nextDue: t,
+      addedAt: t,
+      inNotes: false,
+    })),
+    stats: {
+      streak: 0,
+      lastSessionDate: null,
+      totalSessions: 0,
+      totalCorrect: 0,
+      totalSeen: 0,
+    },
+  };
+}
+
+function mergeSeed(base) {
+  const ids = new Set(base.words.map((w) => w.id));
+  const t = today0();
+  const additions = SEED.filter((s) => !ids.has(s.id)).map((s) => ({
+    id: s.id, word: s.w, meaning: s.m, sentence: s.s, month: s.mo,
+    mastery: 0, seen: 0, correct: 0, lastSeen: null, nextDue: t, addedAt: t, inNotes: false,
+  }));
+  return additions.length ? { ...base, words: [...base.words, ...additions] } : base;
+}
+
+async function loadState() {
+  try {
+    const value = localStorage.getItem(STORAGE_KEY);
+    if (value) {
+      const parsed = JSON.parse(value);
+      if (parsed.version === VERSION) return mergeSeed(parsed);
+    }
+  } catch (e) {
+    // chave ainda não existe ou JSON inválido — cai no estado inicial
+  }
+  return buildInitialState();
+}
+
+async function saveState(state) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    return true;
+  } catch (e) {
+    console.error("Save failed:", e);
+    return false;
+  }
+}
+
+// Compact backup: progress + any custom words (seed definitions rebuilt on import)
+function exportProgress(state) {
+  const payload = {
+    v: VERSION,
+    stats: state.stats,
+    prog: state.words.map((w) => [w.id, w.mastery, w.seen, w.correct, w.lastSeen, w.nextDue, w.inNotes ? 1 : 0]),
+    custom: state.words
+      .filter((w) => !String(w.id).startsWith("seed-"))
+      .map((w) => ({ id: w.id, word: w.word, meaning: w.meaning, sentence: w.sentence, month: w.month })),
+  };
+  return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+}
+
+function importProgress(code) {
+  const payload = JSON.parse(decodeURIComponent(escape(atob(code.trim()))));
+  const t = today0();
+  const base = buildInitialState();
+  for (const c of payload.custom || []) {
+    if (!base.words.find((w) => w.id === c.id)) {
+      base.words.push({ ...c, mastery: 0, seen: 0, correct: 0, lastSeen: null, nextDue: t, addedAt: t, inNotes: false });
+    }
+  }
+  const pmap = new Map((payload.prog || []).map((p) => [p[0], p]));
+  base.words = base.words.map((w) => {
+    const p = pmap.get(w.id);
+    if (!p) return w;
+    return { ...w, mastery: p[1], seen: p[2], correct: p[3], lastSeen: p[4], nextDue: p[5], inNotes: !!p[6] };
+  });
+  base.stats = payload.stats || base.stats;
+  return base;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────────────────────────────────────
+function speak(text) {
+  if (typeof window === "undefined" || !window.speechSynthesis) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "en-US";
+  u.rate = 0.9;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+
+// ── Claude API (opcional) para exemplos dinâmicos + traduções ─────────────────
+// Standalone: chama a API da Anthropic direto do browser. Só funciona se você
+// salvar sua própria chave de API (aba Dicas → engrenagem / painel de backup).
+const _translationCache = {};
+
+async function callClaudeJSON(userPrompt) {
+  const apiKey = (localStorage.getItem(API_KEY_KEY) || "").trim();
+  if (!apiKey) throw new Error("Sem chave de API configurada.");
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "anthropic-dangerous-direct-browser-access": "true",
+    },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 1000,
+      messages: [{ role: "user", content: userPrompt }],
+    }),
+  });
+  if (!response.ok) throw new Error("Erro da API: " + response.status);
+  const data = await response.json();
+  const text = (data.content || []).filter((b) => b.type === "text").map((b) => b.text).join("\n");
+  const clean = text.replace(/```json/g, "").replace(/```/g, "").trim();
+  return JSON.parse(clean);
+}
+
+async function genExample(word, register) {
+  const ctx = register === "ti"
+    ? "a workplace IT / ServiceNow context (incidents, workflows, platforms, tickets, releases)"
+    : "an everyday-life context (travel, food, home, routine, shopping)";
+  const prompt = `You are helping a Brazilian learner study the English word or expression "${word}". Write ONE short, natural English example sentence (max 12 words) using "${word}" in ${ctx}. Wrap the exact target "${word}" in square brackets, e.g. [${word}]. Also give a natural Brazilian Portuguese translation of the full sentence. Return ONLY JSON, no markdown, no preamble: {"sentence":"...","translation":"..."}`;
+  return await callClaudeJSON(prompt);
+}
+
+async function translateSentence(sentence) {
+  const plain = sentence.replace(/\[/g, "").replace(/\]/g, "");
+  if (_translationCache[plain]) return _translationCache[plain];
+  const prompt = `Translate this English sentence to natural Brazilian Portuguese. Return ONLY JSON, no markdown: {"translation":"..."}\nSentence: "${plain}"`;
+  const r = await callClaudeJSON(prompt);
+  _translationCache[plain] = r.translation;
+  return r.translation;
+}
+
+function parseSentence(s) {
+  // Returns: { before, target, after }
+  const m = s.match(/^(.*?)\[([^\]]+)\](.*)$/);
+  if (!m) return { before: s, target: "", after: "" };
+  return { before: m[1], target: m[2], after: m[3] };
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function normalize(s) {
+  return (s || "").toLowerCase().trim().replace(/[.,!?;:'"]/g, "");
+}
+
+function updateStreak(stats) {
+  const t = today0();
+  const last = stats.lastSessionDate;
+  if (!last) return { ...stats, streak: 1, lastSessionDate: t };
+  if (last === t) return stats; // already counted today
+  if (last === t - dayMs) return { ...stats, streak: stats.streak + 1, lastSessionDate: t };
+  return { ...stats, streak: 1, lastSessionDate: t };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MAIN APP
+// ─────────────────────────────────────────────────────────────────────────────
+function App() {
+  const [state, setState] = useState(null);
+  const [tab, setTab] = useState("review");
+  const [reviewScope, setReviewScope] = useState("Junho");
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [lastSaved, setLastSaved] = useState(null);
+  const [savingError, setSavingError] = useState(false);
+
+  // Boot
+  useEffect(() => {
+    (async () => {
+      const s = await loadState();
+      setState(s);
+      setLoading(false);
+    })();
+  }, []);
+
+  // Persist on changes, tracking save status
+  useEffect(() => {
+    if (!state) return;
+    let cancelled = false;
+    (async () => {
+      const ok = await saveState(state);
+      if (cancelled) return;
+      if (ok) { setLastSaved(Date.now()); setSavingError(false); }
+      else setSavingError(true);
+    })();
+    return () => { cancelled = true; };
+  }, [state]);
+
+  const updateWords = useCallback((updater) => {
+    setState((prev) => ({ ...prev, words: updater(prev.words) }));
+  }, []);
+
+  const updateState = useCallback((updater) => {
+    setState((prev) => updater(prev));
+  }, []);
+
+  if (loading || !state) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }}>
+        <div style={{ color: "var(--ink-muted)", fontFamily: "var(--body)" }}>Carregando seu vocabulário…</div>
+      </div>
+    );
+  }
+
+  const wordsByScope = (scope) => {
+    if (scope === "Notes") return state.words.filter((w) => w.inNotes);
+    return state.words.filter((w) => w.month === scope);
+  };
+
+  const startSession = (scope, mode, dueOnly) => {
+    const pool = wordsByScope(scope);
+    const t = today0();
+    const filtered = dueOnly ? pool.filter((w) => (w.nextDue || 0) <= t) : pool;
+    const queue = shuffle(filtered).slice(0, Math.min(20, filtered.length));
+    if (queue.length === 0) {
+      alert("Nenhuma palavra para revisar agora. Tente outro mês ou desligue 'só vencidas'.");
+      return;
+    }
+    setSession({
+      scope, mode, dueOnly,
+      queue, index: 0,
+      results: [], // { wordId, gotIt }
+      done: false,
+    });
+    setTab("session");
+  };
+
+  const handleAnswer = (gotIt) => {
+    const cur = session.queue[session.index];
+    const reviewed = reviewWord(cur, gotIt);
+    updateWords((words) => words.map((w) => (w.id === cur.id ? reviewed : w)));
+    const newResults = [...session.results, { wordId: cur.id, gotIt }];
+    const nextIndex = session.index + 1;
+    if (nextIndex >= session.queue.length) {
+      // Done
+      const correct = newResults.filter((r) => r.gotIt).length;
+      updateState((prev) => ({
+        ...prev,
+        stats: updateStreak({
+          ...prev.stats,
+          totalSessions: prev.stats.totalSessions + 1,
+          totalCorrect: prev.stats.totalCorrect + correct,
+          totalSeen: prev.stats.totalSeen + newResults.length,
+        }),
+      }));
+      setSession({ ...session, results: newResults, done: true });
+    } else {
+      setSession({ ...session, results: newResults, index: nextIndex });
+    }
+  };
+
+  const counts = {};
+  MONTHS.forEach((m) => { counts[m] = state.words.filter((w) => w.month === m).length; });
+  counts.Notes = state.words.filter((w) => w.inNotes).length;
+
+  const dueToday = state.words.filter((w) => (w.nextDue || 0) <= today0()).length;
+  const mastered = state.words.filter((w) => w.mastery >= 4).length;
+  const accuracy = state.stats.totalSeen > 0 ? Math.round((state.stats.totalCorrect / state.stats.totalSeen) * 100) : 0;
+
+  return (
+    <div className="min-h-screen" style={{ background: "var(--bg)" }}>
+      <style>{globalCSS}</style>
+
+      {/* Header */}
+      <header className="px-6 py-8 md:px-10 md:py-10" style={{ borderBottom: "1px solid var(--line)" }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-baseline justify-between gap-4 flex-wrap">
+            <div>
+              <div style={{ fontFamily: "var(--display)", fontWeight: 300, fontSize: "0.85rem", letterSpacing: "0.2em", color: "var(--ink-muted)", textTransform: "uppercase" }}>
+                Vocabulary Review
+              </div>
+              <h1 style={{ fontFamily: "var(--display)", fontWeight: 500, fontSize: "clamp(2.2rem, 5vw, 3.4rem)", lineHeight: 1, color: "var(--ink)", marginTop: "0.5rem", letterSpacing: "-0.02em" }}>
+                Revisão <em style={{ fontStyle: "italic", color: "var(--accent)" }}>mensal</em>
+              </h1>
+            </div>
+            <StatsRow streak={state.stats.streak} dueToday={dueToday} mastered={mastered} accuracy={accuracy} total={state.words.length} />
+          </div>
+        </div>
+      </header>
+
+      {/* Tab navigation */}
+      <nav className="px-6 md:px-10 sticky top-0 z-10" style={{ background: "var(--bg)", borderBottom: "1px solid var(--line)" }}>
+        <div className="max-w-5xl mx-auto flex gap-1 overflow-x-auto" style={{ scrollbarWidth: "thin" }}>
+          <TabBtn active={tab === "review"} onClick={() => setTab("review")}>
+            <BookOpen size={14} /> Revisar
+          </TabBtn>
+          <TabBtn active={tab === "notes"} onClick={() => setTab("notes")}>
+            <Bookmark size={14} /> Reforço <span className="badge">{counts.Notes}</span>
+          </TabBtn>
+          <TabBtn active={tab === "all"} onClick={() => setTab("all")}>
+            <BookOpen size={14} /> Todas
+          </TabBtn>
+          <TabBtn active={tab === "dicas"} onClick={() => setTab("dicas")}>
+            <Sparkles size={14} /> Dicas
+          </TabBtn>
+          <TabBtn active={tab === "add"} onClick={() => setTab("add")}>
+            <Plus size={14} /> Adicionar
+          </TabBtn>
+        </div>
+      </nav>
+
+      {/* Main */}
+      <main className="px-6 py-8 md:px-10 md:py-12">
+        <div className="max-w-5xl mx-auto">
+          {tab === "review" && (
+            <ReviewLauncher counts={counts} reviewScope={reviewScope} setReviewScope={setReviewScope} startSession={startSession} dueToday={dueToday} />
+          )}
+          {tab === "session" && session && (
+            <Session session={session} onAnswer={handleAnswer} onClose={() => { setSession(null); setTab("review"); }} onReplay={() => startSession(session.scope, session.mode, session.dueOnly)} />
+          )}
+          {tab === "notes" && <NotesView words={state.words.filter((w) => w.inNotes)} startSession={() => startSession("Notes", "flashcard", false)} removeFromNotes={(id) => updateWords((words) => words.map((w) => (w.id === id ? { ...w, inNotes: false } : w)))} />}
+          {tab === "all" && <AllWordsView words={state.words} updateWords={updateWords} />}
+          {tab === "dicas" && <DicasView />}
+          {tab === "add" && <AddWordView onAdd={(w) => updateWords((words) => [...words, w])} />}
+        </div>
+      </main>
+
+      <footer className="px-6 py-8 md:px-10" style={{ borderTop: "1px solid var(--line)" }}>
+        <div className="max-w-5xl mx-auto">
+          <BackupPanel state={state} onImport={(s) => { setState(s); setSession(null); setTab("review"); }} />
+          <div className="mt-6 flex items-center justify-center gap-2" style={{ color: savingError ? "var(--accent)" : "var(--ink-muted)", fontFamily: "var(--body)", fontSize: "0.78rem" }}>
+            {savingError ? (
+              <span>Não consegui salvar automaticamente. Use "Exportar progresso" acima para guardar um backup.</span>
+            ) : (
+              <span>{lastSaved ? "Progresso salvo automaticamente no navegador." : "Pronto para começar."}</span>
+            )}
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BACKUP PANEL (export / import progress + chave de API opcional)
+// ─────────────────────────────────────────────────────────────────────────────
+function BackupPanel({ state, onImport }) {
+  const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState(null); // null | "export" | "import"
+  const [code, setCode] = useState("");
+  const [importText, setImportText] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [msg, setMsg] = useState(null);
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem(API_KEY_KEY) || "");
+  const [keySaved, setKeySaved] = useState(false);
+
+  const doExport = () => {
+    try {
+      setCode(exportProgress(state));
+      setMode("export");
+      setMsg(null);
+    } catch (e) { setMsg({ ok: false, t: "Erro ao gerar o backup." }); }
+  };
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch (e) {
+      setMsg({ ok: false, t: "Copie o texto manualmente (seleção longa)." });
+    }
+  };
+
+  const doImport = () => {
+    if (!importText.trim()) return;
+    if (!confirm("Restaurar o progresso desse backup? Isso substitui o estado atual.")) return;
+    try {
+      const restored = importProgress(importText);
+      onImport(restored);
+      setMsg({ ok: true, t: "Progresso restaurado." });
+      setImportText("");
+      setMode(null);
+    } catch (e) {
+      setMsg({ ok: false, t: "Código inválido. Confira se copiou tudo." });
+    }
+  };
+
+  const saveKey = () => {
+    const k = apiKey.trim();
+    if (k) localStorage.setItem(API_KEY_KEY, k);
+    else localStorage.removeItem(API_KEY_KEY);
+    setKeySaved(true);
+    setTimeout(() => setKeySaved(false), 1800);
+  };
+
+  return (
+    <div className="text-center">
+      <button onClick={() => setOpen(!open)} className="inline-flex items-center gap-2" style={{ fontFamily: "var(--body)", fontSize: "0.8rem", color: "var(--ink-muted)" }}>
+        <Bookmark size={13} /> Backup do progresso
+        <ChevronRight size={13} style={{ transform: open ? "rotate(90deg)" : "none", transition: "transform 0.2s" }} />
+      </button>
+
+      {open && (
+        <div className="mt-4 p-5 text-left max-w-xl mx-auto reveal" style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: "2px" }}>
+          <p style={{ fontFamily: "var(--body)", fontSize: "0.83rem", color: "var(--ink-muted)", lineHeight: 1.55 }}>
+            Seu progresso já fica salvo no navegador (localStorage). Como segurança extra, gere um código e guarde (notas, e-mail). Se algum dia o app abrir zerado, é só colar o código de volta.
+          </p>
+          <div className="flex gap-2 mt-4">
+            <button onClick={doExport} className="px-4 py-2" style={{ background: "var(--ink)", color: "var(--surface)", fontFamily: "var(--body)", fontSize: "0.83rem", borderRadius: "2px" }}>
+              Exportar progresso
+            </button>
+            <button onClick={() => { setMode("import"); setMsg(null); }} className="px-4 py-2" style={{ background: "var(--surface)", color: "var(--ink)", border: "1px solid var(--line)", fontFamily: "var(--body)", fontSize: "0.83rem", borderRadius: "2px" }}>
+              Importar progresso
+            </button>
+          </div>
+
+          {mode === "export" && (
+            <div className="mt-4 reveal">
+              <textarea readOnly value={code} rows={4} onFocus={(e) => e.target.select()} className="input" style={{ fontFamily: "var(--mono)", fontSize: "0.7rem", wordBreak: "break-all" }} />
+              <button onClick={copy} className="mt-2 px-4 py-2 inline-flex items-center gap-2" style={{ background: "var(--success)", color: "var(--surface)", fontFamily: "var(--body)", fontSize: "0.83rem", borderRadius: "2px" }}>
+                <Check size={14} /> {copied ? "Copiado" : "Copiar código"}
+              </button>
+            </div>
+          )}
+
+          {mode === "import" && (
+            <div className="mt-4 reveal">
+              <textarea value={importText} onChange={(e) => setImportText(e.target.value)} rows={4} placeholder="Cole aqui o código do backup..." className="input" style={{ fontFamily: "var(--mono)", fontSize: "0.7rem" }} />
+              <button onClick={doImport} className="mt-2 px-4 py-2" style={{ background: "var(--ink)", color: "var(--surface)", fontFamily: "var(--body)", fontSize: "0.83rem", borderRadius: "2px" }}>
+                Restaurar
+              </button>
+            </div>
+          )}
+
+          {/* Chave de API opcional — habilita "Outro exemplo" e tradução automática */}
+          <div className="mt-5 pt-5" style={{ borderTop: "1px dashed var(--line)" }}>
+            <div style={{ fontFamily: "var(--body)", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--ink-muted)" }}>
+              Recursos de IA (opcional)
+            </div>
+            <p style={{ fontFamily: "var(--body)", fontSize: "0.8rem", color: "var(--ink-muted)", lineHeight: 1.55, marginTop: "0.4rem" }}>
+              Para usar "Outro exemplo" e a tradução automática, cole sua chave da API da Anthropic. Ela fica só no seu navegador. Sem chave, o resto do app funciona normalmente.
+            </p>
+            <input type="password" value={apiKey} onChange={(e) => setApiKey(e.target.value)} placeholder="sk-ant-..." className="input mt-2" style={{ fontFamily: "var(--mono)", fontSize: "0.78rem" }} />
+            <button onClick={saveKey} className="mt-2 px-4 py-2" style={{ background: "var(--ink)", color: "var(--surface)", fontFamily: "var(--body)", fontSize: "0.83rem", borderRadius: "2px" }}>
+              {keySaved ? "Salva" : "Salvar chave"}
+            </button>
+          </div>
+
+          {msg && (
+            <div className="mt-3" style={{ fontFamily: "var(--body)", fontSize: "0.82rem", color: msg.ok ? "var(--success)" : "var(--accent)" }}>
+              {msg.t}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HEADER STATS
+// ─────────────────────────────────────────────────────────────────────────────
+function StatsRow({ streak, dueToday, mastered, accuracy, total }) {
+  const items = [
+    { icon: <Flame size={14} />, label: "streak", value: `${streak}d` },
+    { icon: <Calendar size={14} />, label: "hoje", value: dueToday },
+    { icon: <Target size={14} />, label: "domínio", value: `${mastered}/${total}` },
+    { icon: <TrendingUp size={14} />, label: "acerto", value: `${accuracy}%` },
+  ];
+  return (
+    <div className="flex gap-4 md:gap-6 flex-wrap items-center">
+      {items.map((it) => (
+        <div key={it.label} className="flex items-center gap-2">
+          <div style={{ color: "var(--accent)" }}>{it.icon}</div>
+          <div>
+            <div style={{ fontFamily: "var(--mono)", fontWeight: 600, fontSize: "1rem", color: "var(--ink)", lineHeight: 1 }}>{it.value}</div>
+            <div style={{ fontFamily: "var(--body)", fontSize: "0.7rem", color: "var(--ink-muted)", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "2px" }}>{it.label}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TABS
+// ─────────────────────────────────────────────────────────────────────────────
+function TabBtn({ active, onClick, children }) {
+  return (
+    <button onClick={onClick} className="px-4 py-3 flex items-center gap-2 whitespace-nowrap transition-all" style={{ fontFamily: "var(--body)", fontSize: "0.85rem", fontWeight: 500, color: active ? "var(--accent)" : "var(--ink-muted)", borderBottom: active ? "2px solid var(--accent)" : "2px solid transparent", marginBottom: "-1px" }}>
+      {children}
+    </button>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// REVIEW LAUNCHER (choose month + mode)
+// ─────────────────────────────────────────────────────────────────────────────
+function ReviewLauncher({ counts, reviewScope, setReviewScope, startSession, dueToday }) {
+  const [mode, setMode] = useState("flashcard");
+  const [dueOnly, setDueOnly] = useState(true);
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* Left: month picker */}
+      <div className="md:col-span-2">
+        <SectionTitle>Escolha o mês</SectionTitle>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+          {MONTHS.map((m) => (
+            <button key={m} onClick={() => setReviewScope(m)} className="text-left p-5 transition-all" style={{ background: reviewScope === m ? "var(--surface-strong)" : "var(--surface)", border: `1px solid ${reviewScope === m ? "var(--accent)" : "var(--line)"}`, borderRadius: "2px" }}>
+              <div style={{ fontFamily: "var(--display)", fontSize: "1.6rem", fontWeight: 500, color: "var(--ink)", lineHeight: 1 }}>{m}</div>
+              <div style={{ fontFamily: "var(--body)", fontSize: "0.78rem", color: "var(--ink-muted)", marginTop: "0.5rem", letterSpacing: "0.05em" }}>{counts[m]} palavras</div>
+            </button>
+          ))}
+        </div>
+
+        <SectionTitle className="mt-10">Modo</SectionTitle>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+          <ModeCard active={mode === "flashcard"} onClick={() => setMode("flashcard")} title="Flashcard" desc="Veja a palavra, recorde o significado. Clássico." icon={<BookOpen size={18} />} />
+          <ModeCard active={mode === "fillblank"} onClick={() => setMode("fillblank")} title="Frase com lacuna" desc="Preencha a palavra no contexto da frase." icon={<Pencil size={18} />} />
+        </div>
+
+        <label className="flex items-center gap-3 mt-6 cursor-pointer" style={{ fontFamily: "var(--body)", color: "var(--ink-muted)", fontSize: "0.9rem" }}>
+          <input type="checkbox" checked={dueOnly} onChange={(e) => setDueOnly(e.target.checked)} style={{ accentColor: "var(--accent)" }} />
+          Só palavras vencidas hoje ({dueToday})
+        </label>
+
+        <button onClick={() => startSession(reviewScope, mode, dueOnly)} className="mt-8 inline-flex items-center gap-3 px-7 py-4 transition-all hover:opacity-90" style={{ background: "var(--ink)", color: "var(--surface)", fontFamily: "var(--body)", fontWeight: 500, fontSize: "0.95rem", letterSpacing: "0.02em", borderRadius: "2px" }}>
+          Começar revisão <ArrowRight size={18} />
+        </button>
+      </div>
+
+      {/* Right: tips */}
+      <aside className="p-6" style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: "2px" }}>
+        <div className="flex items-center gap-2 mb-3" style={{ color: "var(--accent)" }}>
+          <Sparkles size={16} />
+          <div style={{ fontFamily: "var(--body)", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase" }}>Como funciona</div>
+        </div>
+        <ul className="space-y-3" style={{ fontFamily: "var(--body)", fontSize: "0.88rem", color: "var(--ink-muted)", lineHeight: 1.6 }}>
+          <li>Acertou: a palavra volta em mais tempo (1 → 3 → 7 → 14 → 30 dias).</li>
+          <li>Errou: vai pra <strong style={{ color: "var(--ink)" }}>Reforço</strong> e volta amanhã.</li>
+          <li>3 acertos seguidos: sai do Reforço automaticamente.</li>
+          <li>Ícone de áudio em cada card lê a palavra em voz alta.</li>
+        </ul>
+      </aside>
+    </div>
+  );
+}
+
+function ModeCard({ active, onClick, title, desc, icon }) {
+  return (
+    <button onClick={onClick} className="text-left p-5 transition-all" style={{ background: active ? "var(--surface-strong)" : "var(--surface)", border: `1px solid ${active ? "var(--accent)" : "var(--line)"}`, borderRadius: "2px" }}>
+      <div className="flex items-center gap-2" style={{ color: active ? "var(--accent)" : "var(--ink)" }}>
+        {icon}
+        <div style={{ fontFamily: "var(--display)", fontSize: "1.1rem", fontWeight: 500 }}>{title}</div>
+      </div>
+      <div style={{ fontFamily: "var(--body)", fontSize: "0.83rem", color: "var(--ink-muted)", marginTop: "0.4rem", lineHeight: 1.5 }}>{desc}</div>
+    </button>
+  );
+}
+
+function SectionTitle({ children, className = "" }) {
+  return (
+    <div className={className} style={{ fontFamily: "var(--body)", fontSize: "0.72rem", fontWeight: 600, color: "var(--ink-muted)", textTransform: "uppercase", letterSpacing: "0.18em" }}>
+      {children}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SESSION
+// ─────────────────────────────────────────────────────────────────────────────
+function Session({ session, onAnswer, onClose, onReplay }) {
+  if (session.done) {
+    const correct = session.results.filter((r) => r.gotIt).length;
+    const total = session.results.length;
+    const pct = Math.round((correct / total) * 100);
+    return (
+      <div className="max-w-2xl mx-auto text-center py-12">
+        <div style={{ fontFamily: "var(--body)", fontSize: "0.75rem", letterSpacing: "0.2em", color: "var(--ink-muted)", textTransform: "uppercase" }}>Sessão finalizada</div>
+        <h2 style={{ fontFamily: "var(--display)", fontSize: "clamp(3rem, 7vw, 5rem)", fontWeight: 500, color: "var(--ink)", marginTop: "1rem", lineHeight: 1, letterSpacing: "-0.02em" }}>
+          {correct}<span style={{ color: "var(--ink-muted)" }}>/{total}</span>
+        </h2>
+        <div style={{ fontFamily: "var(--body)", fontSize: "1.1rem", color: pct >= 70 ? "var(--success)" : "var(--accent)", marginTop: "0.5rem" }}>
+          {pct}% de acerto
+        </div>
+        <div className="flex gap-3 justify-center mt-10">
+          <button onClick={onReplay} className="px-6 py-3 inline-flex items-center gap-2" style={{ background: "var(--ink)", color: "var(--surface)", fontFamily: "var(--body)", borderRadius: "2px" }}>
+            <RotateCcw size={16} /> Nova sessão
+          </button>
+          <button onClick={onClose} className="px-6 py-3" style={{ background: "var(--surface)", color: "var(--ink)", fontFamily: "var(--body)", border: "1px solid var(--line)", borderRadius: "2px" }}>
+            Voltar
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const cur = session.queue[session.index];
+  const progress = ((session.index) / session.queue.length) * 100;
+
+  return (
+    <div>
+      {/* Progress */}
+      <div className="flex items-center justify-between mb-6">
+        <button onClick={onClose} style={{ fontFamily: "var(--body)", fontSize: "0.8rem", color: "var(--ink-muted)" }}>← Sair da sessão</button>
+        <div style={{ fontFamily: "var(--mono)", fontSize: "0.85rem", color: "var(--ink-muted)" }}>
+          {session.index + 1} / {session.queue.length}
+        </div>
+      </div>
+      <div className="h-px mb-10" style={{ background: "var(--line)" }}>
+        <div className="h-full transition-all" style={{ background: "var(--accent)", width: `${progress}%` }} />
+      </div>
+
+      {session.mode === "flashcard" ? <Flashcard word={cur} onAnswer={onAnswer} key={cur.id} /> : <FillBlank word={cur} onAnswer={onAnswer} key={cur.id} />}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EXTRA EXAMPLE (on-demand, AI-generated, alternating IT / everyday register)
+// ─────────────────────────────────────────────────────────────────────────────
+function ExtraExample({ word }) {
+  const [loading, setLoading] = useState(false);
+  const [ex, setEx] = useState(null);
+  const [err, setErr] = useState(false);
+  const reg = useRef("dia");
+
+  const fetchOne = async () => {
+    setLoading(true); setErr(false);
+    const register = reg.current;
+    reg.current = register === "ti" ? "dia" : "ti";
+    try {
+      const r = await genExample(word.word, register);
+      setEx({ ...r, register });
+    } catch (e) { setErr(true); }
+    setLoading(false);
+  };
+
+  const parsed = ex ? parseSentence(ex.sentence) : null;
+
+  return (
+    <div className="mt-5 pt-5" style={{ borderTop: "1px dashed var(--line)" }}>
+      <button onClick={fetchOne} disabled={loading} className="inline-flex items-center gap-2 px-4 py-2 transition-all hover:opacity-90 disabled:opacity-50" style={{ background: "var(--surface-strong)", color: "var(--ink)", border: "1px solid var(--line)", fontFamily: "var(--body)", fontSize: "0.83rem", borderRadius: "2px" }}>
+        <Sparkles size={14} /> {loading ? "Gerando exemplo…" : ex ? "Mais um exemplo" : "Outro exemplo"}
+      </button>
+      {err && (
+        <div className="mt-2" style={{ fontFamily: "var(--body)", fontSize: "0.82rem", color: "var(--accent)" }}>
+          Não consegui gerar agora. Configure sua chave de API no rodapé (Backup do progresso) e tente de novo.
+        </div>
+      )}
+      {ex && parsed && (
+        <div className="mt-3 reveal">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="month-pill">{ex.register === "ti" ? "TI" : "Dia a dia"}</span>
+            <button onClick={() => speak(parsed.before + parsed.target + parsed.after)} className="p-1 hover:opacity-70" style={{ color: "var(--ink-muted)" }} title="Ouvir"><Volume2 size={14} /></button>
+          </div>
+          <p style={{ fontFamily: "var(--body)", fontSize: "1rem", color: "var(--ink)", lineHeight: 1.55 }}>
+            {parsed.before}<strong style={{ color: "var(--accent)", fontWeight: 600 }}>{parsed.target}</strong>{parsed.after}
+          </p>
+          <p style={{ fontFamily: "var(--body)", fontSize: "0.88rem", color: "var(--ink-muted)", marginTop: "0.2rem", fontStyle: "italic" }}>
+            {ex.translation}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FLASHCARD MODE
+// ─────────────────────────────────────────────────────────────────────────────
+function Flashcard({ word, onAnswer }) {
+  const [revealed, setRevealed] = useState(false);
+  const { before, target, after } = parseSentence(word.sentence);
+
+  return (
+    <div className="max-w-2xl mx-auto">
+      <div className="p-8 md:p-12 relative" style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: "2px", minHeight: "320px" }}>
+        <div className="flex items-start justify-between mb-8">
+          <span className="month-pill">{word.month}</span>
+          <button onClick={() => speak(word.word)} className="p-2 transition-colors hover:opacity-70" style={{ color: "var(--ink-muted)" }} title="Ouvir pronúncia">
+            <Volume2 size={18} />
+          </button>
+        </div>
+
+        <div style={{ fontFamily: "var(--display)", fontSize: "clamp(2.4rem, 7vw, 4rem)", fontWeight: 500, color: "var(--ink)", lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+          {word.word}
+        </div>
+
+        {!revealed ? (
+          <button onClick={() => setRevealed(true)} className="mt-10 inline-flex items-center gap-2 px-5 py-3 transition-all hover:opacity-90" style={{ background: "var(--ink)", color: "var(--surface)", fontFamily: "var(--body)", fontSize: "0.9rem", borderRadius: "2px" }}>
+            Revelar significado <ChevronRight size={16} />
+          </button>
+        ) : (
+          <div className="mt-8 reveal">
+            <div style={{ fontFamily: "var(--body)", fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ink-muted)" }}>
+              Significado
+            </div>
+            <div style={{ fontFamily: "var(--display)", fontSize: "1.4rem", fontStyle: "italic", color: "var(--accent)", marginTop: "0.4rem", lineHeight: 1.3 }}>
+              {word.meaning}
+            </div>
+            <div className="mt-6 pt-6" style={{ borderTop: "1px dashed var(--line)" }}>
+              <div style={{ fontFamily: "var(--body)", fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ink-muted)" }}>
+                No contexto
+              </div>
+              <p style={{ fontFamily: "var(--body)", fontSize: "1.05rem", color: "var(--ink)", marginTop: "0.4rem", lineHeight: 1.6 }}>
+                {before}<strong style={{ color: "var(--accent)", fontWeight: 600 }}>{target}</strong>{after}
+              </p>
+              <ExtraExample word={word} />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {revealed && (
+        <div className="grid grid-cols-2 gap-3 mt-4 reveal">
+          <button onClick={() => onAnswer(false)} className="px-5 py-4 flex items-center justify-center gap-2 transition-all hover:opacity-90" style={{ background: "var(--surface)", color: "var(--accent)", border: "1px solid var(--accent)", fontFamily: "var(--body)", fontSize: "0.95rem", fontWeight: 500, borderRadius: "2px" }}>
+            <X size={18} /> Não sabia
+          </button>
+          <button onClick={() => onAnswer(true)} className="px-5 py-4 flex items-center justify-center gap-2 transition-all hover:opacity-90" style={{ background: "var(--success)", color: "var(--surface)", fontFamily: "var(--body)", fontSize: "0.95rem", fontWeight: 500, borderRadius: "2px" }}>
+            <Check size={18} /> Sabia
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FILL-IN-BLANK MODE
+// ─────────────────────────────────────────────────────────────────────────────
+function FillBlank({ word, onAnswer }) {
+  const [val, setVal] = useState("");
+  const [result, setResult] = useState(null); // null | "right" | "wrong"
+  const [translation, setTranslation] = useState(null);
+  const [translating, setTranslating] = useState(false);
+  const inputRef = useRef(null);
+  const { before, target, after } = parseSentence(word.sentence);
+
+  useEffect(() => { if (inputRef.current) inputRef.current.focus(); }, []);
+
+  const fetchTranslation = async () => {
+    setTranslating(true);
+    try {
+      const t = await translateSentence(word.sentence);
+      setTranslation(t);
+    } catch (e) {
+      setTranslation("__error__");
+    }
+    setTranslating(false);
+  };
+
+  const check = () => {
+    if (!val.trim()) return;
+    const ok = normalize(val) === normalize(target) || normalize(val) === normalize(word.word);
+    setResult(ok ? "right" : "wrong");
+    fetchTranslation();
+  };
+
+  const next = (gotIt) => onAnswer(gotIt);
+
+  const blankWidth = `${Math.max(6, target.length + 1)}ch`;
+
+  return (
+    <div className="max-w-2xl mx-auto">
+      <div className="p-8 md:p-12" style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: "2px", minHeight: "320px" }}>
+        <div className="flex items-start justify-between mb-8">
+          <span className="month-pill">{word.month}</span>
+          <button onClick={() => speak(word.word)} className="p-2 hover:opacity-70" style={{ color: "var(--ink-muted)" }} title="Ouvir">
+            <Volume2 size={18} />
+          </button>
+        </div>
+
+        <div style={{ fontFamily: "var(--body)", fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ink-muted)" }}>
+          Complete a frase
+        </div>
+
+        <div style={{ fontFamily: "var(--display)", fontSize: "clamp(1.3rem, 3vw, 1.7rem)", color: "var(--ink)", lineHeight: 1.5, marginTop: "0.6rem", fontWeight: 400 }}>
+          {before}
+          {result === null ? (
+            <input ref={inputRef} type="text" value={val} onChange={(e) => setVal(e.target.value)} onKeyDown={(e) => e.key === "Enter" && check()} className="px-2 mx-1" style={{ fontFamily: "var(--display)", fontSize: "inherit", color: "var(--accent)", background: "transparent", borderBottom: "2px solid var(--accent)", outline: "none", width: blankWidth, fontWeight: 500 }} placeholder="?" />
+          ) : (
+            <span className="mx-1 px-2" style={{ color: result === "right" ? "var(--success)" : "var(--accent)", fontWeight: 600, borderBottom: `2px solid ${result === "right" ? "var(--success)" : "var(--accent)"}` }}>
+              {target}
+            </span>
+          )}
+          {after}
+        </div>
+
+        {result !== null && (
+          <div className="mt-6 reveal">
+            {result === "wrong" && val && (
+              <div style={{ fontFamily: "var(--body)", fontSize: "0.9rem", color: "var(--ink-muted)" }}>
+                Sua resposta: <span style={{ textDecoration: "line-through" }}>{val}</span>
+              </div>
+            )}
+            <div className="mt-2" style={{ fontFamily: "var(--body)", fontSize: "0.95rem", color: "var(--ink)" }}>
+              <em style={{ color: "var(--ink-muted)" }}>Significado:</em> {word.meaning}
+            </div>
+            <div className="mt-2" style={{ fontFamily: "var(--body)", fontSize: "0.95rem", color: "var(--ink-muted)" }}>
+              <em>Tradução:</em>{" "}
+              {translating && <span>traduzindo…</span>}
+              {!translating && translation && translation !== "__error__" && <span style={{ fontStyle: "italic" }}>{translation}</span>}
+              {!translating && translation === "__error__" && (
+                <button onClick={fetchTranslation} style={{ color: "var(--accent)", textDecoration: "underline" }}>tentar traduzir de novo</button>
+              )}
+            </div>
+            <ExtraExample word={word} />
+          </div>
+        )}
+
+        <div className="mt-8">
+          {result === null && (
+            <button onClick={check} disabled={!val.trim()} className="px-6 py-3 transition-all hover:opacity-90 disabled:opacity-40" style={{ background: "var(--ink)", color: "var(--surface)", fontFamily: "var(--body)", fontSize: "0.9rem", borderRadius: "2px" }}>
+              Verificar
+            </button>
+          )}
+          {result === "right" && (
+            <button onClick={() => next(true)} className="px-6 py-3 inline-flex items-center gap-2" style={{ background: "var(--success)", color: "var(--surface)", fontFamily: "var(--body)", fontSize: "0.95rem", fontWeight: 500, borderRadius: "2px" }}>
+              <Check size={18} /> Próxima
+            </button>
+          )}
+          {result === "wrong" && (
+            <div className="flex gap-3">
+              <button onClick={() => next(false)} className="px-5 py-3 inline-flex items-center gap-2" style={{ background: "var(--surface)", color: "var(--accent)", border: "1px solid var(--accent)", fontFamily: "var(--body)", fontSize: "0.95rem", fontWeight: 500, borderRadius: "2px" }}>
+                <Bookmark size={16} /> Adicionar ao Reforço
+              </button>
+              <button onClick={() => next(false)} className="px-5 py-3" style={{ background: "var(--ink)", color: "var(--surface)", fontFamily: "var(--body)", fontSize: "0.95rem", fontWeight: 500, borderRadius: "2px" }}>
+                Próxima
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// NOTES VIEW
+// ─────────────────────────────────────────────────────────────────────────────
+function NotesView({ words, startSession, removeFromNotes }) {
+  if (words.length === 0) {
+    return (
+      <div className="text-center py-16">
+        <Bookmark size={32} style={{ color: "var(--line)", margin: "0 auto" }} />
+        <h3 style={{ fontFamily: "var(--display)", fontSize: "1.6rem", color: "var(--ink)", marginTop: "1rem", fontWeight: 500 }}>
+          Reforço vazio
+        </h3>
+        <p style={{ fontFamily: "var(--body)", color: "var(--ink-muted)", marginTop: "0.5rem" }}>
+          Palavras que você errar aparecem aqui automaticamente.
+        </p>
+      </div>
+    );
+  }
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+        <div>
+          <SectionTitle>Reforço</SectionTitle>
+          <h2 style={{ fontFamily: "var(--display)", fontSize: "2rem", fontWeight: 500, color: "var(--ink)", marginTop: "0.3rem", lineHeight: 1 }}>
+            {words.length} palavras pra reforçar
+          </h2>
+        </div>
+        <button onClick={startSession} className="px-5 py-3 inline-flex items-center gap-2" style={{ background: "var(--ink)", color: "var(--surface)", fontFamily: "var(--body)", borderRadius: "2px" }}>
+          Revisar Reforço <ArrowRight size={16} />
+        </button>
+      </div>
+      <div className="space-y-2">
+        {words.map((w) => (
+          <WordRow key={w.id} word={w} onRemove={() => removeFromNotes(w.id)} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ALL WORDS VIEW
+// ─────────────────────────────────────────────────────────────────────────────
+function AllWordsView({ words, updateWords }) {
+  const [filter, setFilter] = useState("Todas");
+  const [search, setSearch] = useState("");
+
+  const filtered = useMemo(() => {
+    let r = words;
+    if (filter !== "Todas") r = r.filter((w) => w.month === filter);
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      r = r.filter((w) => w.word.toLowerCase().includes(q) || w.meaning.toLowerCase().includes(q));
+    }
+    return r;
+  }, [words, filter, search]);
+
+  const remove = (id) => {
+    if (!confirm("Apagar essa palavra? Não tem volta.")) return;
+    updateWords((words) => words.filter((w) => w.id !== id));
+  };
+
+  return (
+    <div>
+      <div className="flex items-center gap-4 flex-wrap mb-6">
+        <div className="flex gap-1">
+          {["Todas", ...MONTHS].map((m) => (
+            <button key={m} onClick={() => setFilter(m)} className="px-3 py-2" style={{ fontFamily: "var(--body)", fontSize: "0.8rem", color: filter === m ? "var(--surface)" : "var(--ink-muted)", background: filter === m ? "var(--ink)" : "transparent", border: `1px solid ${filter === m ? "var(--ink)" : "var(--line)"}`, borderRadius: "2px" }}>
+              {m}
+            </button>
+          ))}
+        </div>
+        <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar palavra ou significado..." className="px-3 py-2 flex-1 min-w-[200px]" style={{ fontFamily: "var(--body)", fontSize: "0.85rem", background: "var(--surface)", border: "1px solid var(--line)", color: "var(--ink)", outline: "none", borderRadius: "2px" }} />
+      </div>
+      <div style={{ fontFamily: "var(--body)", fontSize: "0.8rem", color: "var(--ink-muted)", marginBottom: "1rem" }}>
+        {filtered.length} {filtered.length === 1 ? "palavra" : "palavras"}
+      </div>
+      <div className="space-y-2">
+        {filtered.map((w) => (
+          <WordRow key={w.id} word={w} onDelete={() => remove(w.id)} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function WordRow({ word, onRemove, onDelete }) {
+  const [open, setOpen] = useState(false);
+  const { before, target, after } = parseSentence(word.sentence);
+  const acc = word.seen > 0 ? Math.round((word.correct / word.seen) * 100) : null;
+
+  return (
+    <div style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: "2px" }}>
+      <button onClick={() => setOpen(!open)} className="w-full text-left px-4 py-3 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          <MasteryDots mastery={word.mastery} />
+          <div className="flex-1 min-w-0">
+            <div style={{ fontFamily: "var(--display)", fontSize: "1.15rem", color: "var(--ink)", fontWeight: 500 }}>{word.word}</div>
+            <div className="truncate" style={{ fontFamily: "var(--body)", fontSize: "0.82rem", color: "var(--ink-muted)" }}>{word.meaning}</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <span className="month-pill">{word.month}</span>
+          {acc !== null && <span style={{ fontFamily: "var(--mono)", fontSize: "0.75rem", color: "var(--ink-muted)" }}>{acc}%</span>}
+          <ChevronRight size={16} style={{ color: "var(--ink-muted)", transform: open ? "rotate(90deg)" : "none", transition: "transform 0.2s" }} />
+        </div>
+      </button>
+      {open && (
+        <div className="px-4 pb-4 reveal">
+          <div className="pt-3 mt-1" style={{ borderTop: "1px dashed var(--line)" }}>
+            <div style={{ fontFamily: "var(--body)", fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--ink-muted)" }}>Exemplo</div>
+            <p style={{ fontFamily: "var(--body)", fontSize: "0.95rem", color: "var(--ink)", marginTop: "0.3rem", lineHeight: 1.5 }}>
+              {before}<strong style={{ color: "var(--accent)" }}>{target}</strong>{after}
+            </p>
+          </div>
+          <div className="flex items-center gap-4 mt-4 text-xs" style={{ fontFamily: "var(--body)", color: "var(--ink-muted)" }}>
+            <span>Vista {word.seen}x</span>
+            {acc !== null && <span>Acerto {acc}%</span>}
+            <button onClick={() => speak(word.word)} className="inline-flex items-center gap-1 hover:opacity-70" style={{ color: "var(--accent)" }}>
+              <Volume2 size={12} /> Ouvir
+            </button>
+            <div className="flex-1" />
+            {onRemove && (
+              <button onClick={onRemove} className="inline-flex items-center gap-1 hover:opacity-70" style={{ color: "var(--success)" }}>
+                <Check size={12} /> Remover do Reforço
+              </button>
+            )}
+            {onDelete && (
+              <button onClick={onDelete} className="inline-flex items-center gap-1 hover:opacity-70" style={{ color: "var(--accent)" }}>
+                <Trash2 size={12} /> Excluir
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MasteryDots({ mastery }) {
+  return (
+    <div className="flex gap-1 flex-shrink-0">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <div key={i} style={{ width: 6, height: 6, borderRadius: "50%", background: i < mastery ? "var(--gold)" : "var(--line)" }} />
+      ))}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DICAS VIEW (grammar / usage reference)
+// ─────────────────────────────────────────────────────────────────────────────
+function DicasView() {
+  const [search, setSearch] = useState("");
+  const [openGroups, setOpenGroups] = useState(() => {
+    const o = {}; DICAS.forEach((s, i) => { o[s.group] = i === 0; }); return o;
+  });
+
+  const q = search.trim().toLowerCase();
+  const filtered = useMemo(() => {
+    if (!q) return DICAS;
+    return DICAS
+      .map((s) => ({ ...s, items: s.items.filter((it) => it.title.toLowerCase().includes(q) || it.body.toLowerCase().includes(q)) }))
+      .filter((s) => s.items.length > 0);
+  }, [q]);
+
+  // When searching, force groups open
+  const isOpen = (g) => (q ? true : !!openGroups[g]);
+  const toggle = (g) => setOpenGroups((prev) => ({ ...prev, [g]: !prev[g] }));
+  const totalHits = filtered.reduce((n, s) => n + s.items.length, 0);
+
+  return (
+    <div>
+      <SectionTitle>Referência</SectionTitle>
+      <h2 style={{ fontFamily: "var(--display)", fontSize: "2rem", fontWeight: 500, color: "var(--ink)", marginTop: "0.3rem", lineHeight: 1 }}>
+        Dicas de gramática e uso
+      </h2>
+      <p style={{ fontFamily: "var(--body)", color: "var(--ink-muted)", marginTop: "0.5rem", fontSize: "0.9rem", maxWidth: "42ch" }}>
+        Distinções e regras das suas aulas. Não entram nos flashcards — ficam aqui pra consulta rápida.
+      </p>
+
+      <div className="mt-6 relative">
+        <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar dica... (ex: launch, gain, irregular)" className="input" style={{ paddingRight: search ? "2.5rem" : "12px" }} />
+        {search && (
+          <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: "var(--ink-muted)" }}><X size={16} /></button>
+        )}
+      </div>
+      {q && (
+        <div className="mt-2" style={{ fontFamily: "var(--body)", fontSize: "0.8rem", color: "var(--ink-muted)" }}>
+          {totalHits} {totalHits === 1 ? "resultado" : "resultados"}
+        </div>
+      )}
+
+      <div className="mt-6 space-y-3">
+        {filtered.length === 0 && (
+          <div className="py-10 text-center" style={{ fontFamily: "var(--body)", color: "var(--ink-muted)" }}>
+            Nenhuma dica encontrada para "{search}".
+          </div>
+        )}
+        {filtered.map((section) => (
+          <div key={section.group} style={{ border: "1px solid var(--line)", borderRadius: "2px", background: "var(--surface)" }}>
+            <button onClick={() => toggle(section.group)} className="w-full text-left px-5 py-4 flex items-center justify-between">
+              <h3 style={{ fontFamily: "var(--display)", fontSize: "1.2rem", fontWeight: 500, color: "var(--accent)", fontStyle: "italic" }}>
+                {section.group}
+                <span style={{ fontFamily: "var(--body)", fontSize: "0.72rem", fontStyle: "normal", color: "var(--ink-muted)", marginLeft: "0.6rem" }}>
+                  {section.items.length}
+                </span>
+              </h3>
+              <ChevronRight size={16} style={{ color: "var(--ink-muted)", transform: isOpen(section.group) ? "rotate(90deg)" : "none", transition: "transform 0.2s" }} />
+            </button>
+            {isOpen(section.group) && (
+              <div className="px-5 pb-5 grid grid-cols-1 sm:grid-cols-2 gap-3 reveal">
+                {section.items.map((it) => (
+                  <div key={it.title} className="p-4" style={{ background: "var(--bg)", border: "1px solid var(--line)", borderRadius: "2px" }}>
+                    <div className="flex items-center justify-between gap-2">
+                      <div style={{ fontFamily: "var(--mono)", fontSize: "0.92rem", fontWeight: 500, color: "var(--ink)" }}>
+                        {it.title}
+                      </div>
+                      {it.speak && (
+                        <button onClick={() => speak(it.speak)} className="p-1 hover:opacity-70 flex-shrink-0" style={{ color: "var(--accent)" }} title="Ouvir">
+                          <Volume2 size={15} />
+                        </button>
+                      )}
+                    </div>
+                    <p style={{ fontFamily: "var(--body)", fontSize: "0.86rem", color: "var(--ink-muted)", marginTop: "0.4rem", lineHeight: 1.55 }}>
+                      {it.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ADD WORD VIEW
+// ─────────────────────────────────────────────────────────────────────────────
+function AddWordView({ onAdd }) {
+  const [word, setWord] = useState("");
+  const [meaning, setMeaning] = useState("");
+  const [sentence, setSentence] = useState("");
+  const [month, setMonth] = useState("Junho");
+  const [saved, setSaved] = useState(false);
+
+  const submit = () => {
+    if (!word.trim() || !meaning.trim() || !sentence.trim()) return;
+    if (!sentence.includes("[") || !sentence.includes("]")) {
+      alert("Marque a palavra-alvo na frase entre colchetes. Ex: We need [reliable] data.");
+      return;
+    }
+    const t = today0();
+    onAdd({
+      id: `u-${Date.now()}`,
+      word: word.trim(),
+      meaning: meaning.trim(),
+      sentence: sentence.trim(),
+      month,
+      mastery: 0,
+      seen: 0,
+      correct: 0,
+      lastSeen: null,
+      nextDue: t,
+      addedAt: t,
+      inNotes: false,
+    });
+    setWord(""); setMeaning(""); setSentence("");
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  return (
+    <div className="max-w-xl">
+      <SectionTitle>Nova palavra</SectionTitle>
+      <h2 style={{ fontFamily: "var(--display)", fontSize: "2rem", fontWeight: 500, color: "var(--ink)", marginTop: "0.3rem", lineHeight: 1 }}>
+        Adicione ao seu pool
+      </h2>
+      <p style={{ fontFamily: "var(--body)", color: "var(--ink-muted)", marginTop: "0.5rem", fontSize: "0.9rem" }}>
+        Marque a palavra-alvo na frase entre colchetes. Ex: <code style={{ background: "var(--surface)", padding: "0 4px" }}>We need [reliable] data.</code>
+      </p>
+
+      <div className="space-y-4 mt-8">
+        <Field label="Palavra ou expressão">
+          <input type="text" value={word} onChange={(e) => setWord(e.target.value)} placeholder="ex: streamlined" className="input" />
+        </Field>
+        <Field label="Significado em português">
+          <input type="text" value={meaning} onChange={(e) => setMeaning(e.target.value)} placeholder="ex: otimizado, simplificado" className="input" />
+        </Field>
+        <Field label="Frase de exemplo (com colchetes)">
+          <textarea value={sentence} onChange={(e) => setSentence(e.target.value)} placeholder="ex: The new process is much more [streamlined]." rows={3} className="input" />
+        </Field>
+        <Field label="Mês">
+          <select value={month} onChange={(e) => setMonth(e.target.value)} className="input">
+            {MONTHS.map((m) => <option key={m} value={m}>{m}</option>)}
+          </select>
+        </Field>
+
+        <div className="flex items-center gap-3 pt-2">
+          <button onClick={submit} className="px-6 py-3" style={{ background: "var(--ink)", color: "var(--surface)", fontFamily: "var(--body)", borderRadius: "2px" }}>
+            Salvar
+          </button>
+          {saved && <span style={{ color: "var(--success)", fontFamily: "var(--body)", fontSize: "0.9rem" }}>Adicionada</span>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Field({ label, children }) {
+  return (
+    <div>
+      <label style={{ fontFamily: "var(--body)", fontSize: "0.75rem", color: "var(--ink-muted)", textTransform: "uppercase", letterSpacing: "0.12em", display: "block", marginBottom: "0.4rem" }}>
+        {label}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GLOBAL STYLES
+// ─────────────────────────────────────────────────────────────────────────────
+const globalCSS = `
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #F4EFE6;
+    --surface: #FBF7F0;
+    --surface-strong: #F0E8DA;
+    --ink: #1F1A14;
+    --ink-muted: #6B6157;
+    --line: #DDD3C2;
+    --accent: #B5391F;
+    --success: #4F6B3A;
+    --gold: #8E6B23;
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'DM Sans', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; }
+  body { font-family: var(--body); }
+
+  .month-pill {
+    font-family: var(--body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    background: var(--accent);
+    color: var(--surface);
+    padding: 1px 6px;
+    border-radius: 8px;
+    margin-left: 4px;
+  }
+
+  .input {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    font-family: var(--body);
+    font-size: 0.95rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .input:focus { border-color: var(--accent); }
+
+  .reveal { animation: reveal 0.25s ease-out; }
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ink-muted); }
+`;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────────────────────────────────────
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+  </script>
+</body>
+</html>
