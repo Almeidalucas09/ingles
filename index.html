@@ -360,6 +360,142 @@ const SEED = [
   { id: "seed-junho-hair-dryer", w: "hair dryer", m: "secador de cabelo", s: "Every room has a [hair dryer].", mo: "Junho" },
   { id: "seed-junho-unwind", w: "unwind", m: "relaxar", s: "The spa is a great place to [unwind].", mo: "Junho" },
   { id: "seed-junho-calming-retreat", w: "calming retreat", m: "retiro calmo", s: "The resort is a [calming retreat] from the city.", mo: "Junho" },
+  // ─── IRM / Risco (Certificações → IRM → Lista de palavras) ───
+  { id: "seed-irm-concerns", w: "concerns", m: "preocupações", s: "The board raised several [concerns] about the new policy.", mo: "Junho" },
+  { id: "seed-irm-extent", w: "extent", m: "grau, extensão", s: "We measured the [extent] of the data exposure.", mo: "Junho" },
+  { id: "seed-irm-likelihood", w: "likelihood", m: "probabilidade", s: "We assess the [likelihood] of each risk event.", mo: "Junho" },
+  { id: "seed-irm-harm", w: "harm", m: "ferir, prejudicar", s: "A weak control can [harm] the whole organization.", mo: "Junho" },
+  { id: "seed-irm-disclosure", w: "disclosure", m: "divulgação", s: "Full [disclosure] of risks is required by the regulator.", mo: "Junho" },
+  { id: "seed-irm-absence", w: "absence", m: "ausência", s: "In the [absence] of controls, the risk increases.", mo: "Junho" },
+  { id: "seed-irm-weighted", w: "weighted", m: "ponderado", s: "Each risk gets a [weighted] score by impact.", mo: "Junho" },
+  { id: "seed-irm-remaining", w: "remaining", m: "restante", s: "We track the [remaining] risk after controls.", mo: "Junho" },
+  { id: "seed-irm-paramount", w: "paramount", m: "primordial", s: "Data integrity is [paramount] in this audit.", mo: "Junho" },
+  { id: "seed-irm-adversely-impact", w: "adversely impact", m: "impactar negativamente", s: "A breach could [adversely impact] our reputation.", mo: "Junho" },
+  { id: "seed-irm-exploited", w: "exploited", m: "explorada (falha)", s: "The vulnerability was [exploited] by an attacker.", mo: "Junho" },
+  { id: "seed-irm-triggered", w: "triggered", m: "provocado, disparado", s: "The alert was [triggered] by an unusual login.", mo: "Junho" },
+  { id: "seed-irm-countermeasures", w: "countermeasures", m: "contramedidas", s: "We deployed [countermeasures] to reduce the threat.", mo: "Junho" },
+  { id: "seed-irm-strategy-setting", w: "strategy setting", m: "definição estratégica", s: "Risk appetite guides our [strategy setting].", mo: "Junho" },
+  { id: "seed-irm-carry-out", w: "carry out", m: "executar", s: "The team will [carry out] the control tests.", mo: "Junho" },
+  { id: "seed-irm-on-a-broad-level", w: "on a broad level", m: "em termos gerais", s: "[On a broad level], the framework reduces risk.", mo: "Junho" },
+  { id: "seed-irm-willing", w: "willing", m: "disposto", s: "Leadership is [willing] to accept some residual risk.", mo: "Junho" },
+  { id: "seed-irm-pursuit-of-value", w: "pursuit of value", m: "busca de valor", s: "Risk management supports the [pursuit of value].", mo: "Junho" },
+  { id: "seed-irm-compensating", w: "compensating", m: "compensatório", s: "We added a [compensating] control to cover the gap.", mo: "Junho" },
+  { id: "seed-irm-in-lieu", w: "in lieu", m: "em vez de", s: "We used a manual check [in lieu] of automation.", mo: "Junho" },
+  { id: "seed-irm-treatment", w: "treatment", m: "tratamento", s: "Each risk gets a clear [treatment] plan.", mo: "Junho" },
+  { id: "seed-irm-awareness", w: "awareness", m: "conhecimento, consciência", s: "Security [awareness] training is mandatory.", mo: "Junho" },
+  { id: "seed-irm-assurance", w: "assurance", m: "asseguração, garantia", s: "Internal audit provides [assurance] to the board.", mo: "Junho" },
+  { id: "seed-irm-enforce", w: "enforce", m: "aplicar, obrigar, forçar", s: "We [enforce] the access policy across all systems.", mo: "Junho" },
+  { id: "seed-irm-the-grounds", w: "the grounds", m: "os fundamentos", s: "[The grounds] for the decision were documented.", mo: "Junho" },
+  { id: "seed-irm-effective", w: "effective", m: "eficaz", s: "The new control proved highly [effective].", mo: "Junho" },
+  { id: "seed-irm-guideline", w: "guideline", m: "diretriz", s: "Follow the [guideline] when classifying risks.", mo: "Junho" },
+  { id: "seed-irm-statements", w: "statements", m: "declarações", s: "The financial [statements] were reviewed for accuracy.", mo: "Junho" },
+  { id: "seed-irm-assertions", w: "assertions", m: "afirmações", s: "We test management's [assertions] during the audit.", mo: "Junho" },
+  { id: "seed-irm-duties", w: "duties", m: "funções, deveres", s: "Segregation of [duties] prevents fraud.", mo: "Junho" },
+  { id: "seed-irm-deterrence", w: "deterrence", m: "dissuasão", s: "Strong monitoring acts as a [deterrence].", mo: "Junho" },
+  { id: "seed-irm-oversight", w: "oversight", m: "supervisão", s: "The committee provides risk [oversight].", mo: "Junho" },
+  { id: "seed-irm-jointly", w: "jointly", m: "conjuntamente", s: "Risk and compliance work [jointly] on this.", mo: "Junho" },
+  { id: "seed-irm-foreword", w: "foreword", m: "prefácio", s: "The framework's [foreword] explains its purpose.", mo: "Junho" },
+  { id: "seed-irm-over-the-past-decade", w: "over the past decade", m: "ao longo da última década", s: "[Over the past decade], risk practices matured a lot.", mo: "Junho" },
+  { id: "seed-irm-broad-acceptance", w: "broad acceptance", m: "ampla aceitação", s: "The standard gained [broad acceptance] in the industry.", mo: "Junho" },
+  { id: "seed-irm-carrying-out", w: "carrying out", m: "executando", s: "They are [carrying out] the annual risk review.", mo: "Junho" },
+  { id: "seed-irm-neither", w: "neither", m: "nenhum (dos dois)", s: "[Neither] control fully mitigates the risk.", mo: "Junho" },
+  { id: "seed-irm-supersedes", w: "supersedes", m: "substitui", s: "This version [supersedes] the previous policy.", mo: "Junho" },
+  { id: "seed-irm-suitable", w: "suitable", m: "adequado", s: "Choose a [suitable] control for each risk.", mo: "Junho" },
+  { id: "seed-irm-landscape", w: "landscape", m: "paisagem, panorama", s: "The threat [landscape] keeps changing.", mo: "Junho" },
+  { id: "seed-irm-boardroom", w: "boardroom", m: "sala de reunião (diretoria)", s: "Risk is now a [boardroom] topic.", mo: "Junho" },
+  { id: "seed-irm-as-we-seek", w: "as we seek", m: "enquanto buscamos", s: "[As we seek] growth, we must manage risk.", mo: "Junho" },
+  { id: "seed-irm-shrinking", w: "shrinking", m: "encolhendo", s: "Budgets are [shrinking] across the department.", mo: "Junho" },
+  { id: "seed-irm-evaluating", w: "evaluating", m: "avaliando", s: "We are [evaluating] each vendor's risk.", mo: "Junho" },
+  { id: "seed-irm-stakes", w: "stakes", m: "apostas, o que está em jogo", s: "The [stakes] are high for this migration.", mo: "Junho" },
+  { id: "seed-irm-overall-responsibility", w: "overall responsibility", m: "responsabilidade geral", s: "The CISO holds [overall responsibility] for security.", mo: "Junho" },
+  { id: "seed-irm-attuned", w: "attuned", m: "sintonizado", s: "Leaders must stay [attuned] to emerging risks.", mo: "Junho" },
+  { id: "seed-irm-challenging", w: "challenging", m: "desafiador", s: "Mapping every control is [challenging].", mo: "Junho" },
+  { id: "seed-irm-stated-mission", w: "stated mission", m: "missão declarada", s: "Risk must align with the [stated mission].", mo: "Junho" },
+  { id: "seed-irm-deviation", w: "deviation", m: "desvio", s: "Any [deviation] from policy is logged.", mo: "Junho" },
+  { id: "seed-irm-fashion", w: "fashion", m: "elaborar, moldar", s: "We [fashion] controls around real threats.", mo: "Junho" },
+  { id: "seed-irm-embrace", w: "embrace", m: "abraçar, adotar", s: "The team began to [embrace] a risk culture.", mo: "Junho" },
+  { id: "seed-irm-shed-light-on", w: "shed light on", m: "esclarecer", s: "The report helps [shed light on] hidden risks.", mo: "Junho" },
+  { id: "seed-irm-inhibit", w: "inhibit", m: "inibir", s: "Too many controls can [inhibit] productivity.", mo: "Junho" },
+  { id: "seed-irm-pursuit", w: "pursuit", m: "perseguir, busca", s: "The relentless [pursuit] of value drives us.", mo: "Junho" },
+  // ─── Sessão 1 — Aeroporto e Imigração ───
+  { id: "seed-s1-carry-on", w: "carry-on", m: "bagagem de mão", s: "I have one bag to check and one [carry-on].", mo: "Junho" },
+  { id: "seed-s1-aisle-seat", w: "aisle seat", m: "assento do corredor", s: "I'd prefer an [aisle seat], please.", mo: "Junho" },
+  { id: "seed-s1-window-seat", w: "window seat", m: "assento da janela", s: "She booked a [window seat] for the view.", mo: "Junho" },
+  { id: "seed-s1-aircraft", w: "aircraft", m: "aeronave (termo formal)", s: "The [aircraft] is now boarding at gate 12.", mo: "Junho" },
+  { id: "seed-s1-paging", w: "paging", m: "chamando pelo alto-falante", s: "They are [paging] a passenger to the gate.", mo: "Junho" },
+  { id: "seed-s1-return-ticket", w: "return ticket", m: "passagem de volta", s: "I have a [return ticket] to prove I'll leave.", mo: "Junho" },
+  { id: "seed-s1-wheelchair", w: "wheelchair", m: "cadeira de rodas", s: "I'd like to request a [wheelchair] at the gate.", mo: "Junho" },
+  { id: "seed-s1-nods", w: "nods", m: "acena com a cabeça", s: "The officer [nods] and stamps your passport.", mo: "Junho" },
+  { id: "seed-s1-greets", w: "greets", m: "cumprimenta", s: "The agent [greets] you at check-in.", mo: "Junho" },
+  // ─── Sessão 2 — Hotels & Check-in ───
+  { id: "seed-s2-sentences", w: "sentences", m: "frases", s: "Read the example [sentences] out loud.", mo: "Junho" },
+  { id: "seed-s2-noun", w: "noun", m: "substantivo", s: "'Hotel' is a [noun], not a verb.", mo: "Junho" },
+  { id: "seed-s2-out-loud", w: "out loud", m: "em voz alta", s: "Practice the phrases [out loud].", mo: "Junho" },
+  { id: "seed-s2-retrieval", w: "retrieval", m: "recuperação, reaquisição", s: "Flashcards improve word [retrieval].", mo: "Junho" },
+  { id: "seed-s2-tightest", w: "tightest", m: "mais apertado", s: "This is the [tightest] schedule we've had.", mo: "Junho" },
+  { id: "seed-s2-worth", w: "worth", m: "valor, que vale a pena", s: "This hotel is [worth] the price.", mo: "Junho" },
+  { id: "seed-s2-worth-noting", w: "worth noting", m: "vale a pena notar", s: "It's [worth noting] that breakfast is extra.", mo: "Junho" },
+  { id: "seed-s2-stood-out", w: "stood out", m: "destacou-se", s: "One hotel really [stood out] from the rest.", mo: "Junho" },
+  { id: "seed-s2-acknowledges", w: "acknowledges", m: "reconhece", s: "The clerk [acknowledges] your request.", mo: "Junho" },
+  { id: "seed-s2-unmade", w: "unmade", m: "desfeita (cama)", s: "The bed was still [unmade] at noon.", mo: "Junho" },
+  { id: "seed-s2-doubt", w: "doubt", m: "dúvida", s: "If you're in [doubt], ask the front desk.", mo: "Junho" },
+  { id: "seed-s2-draining", w: "draining", m: "escoar, drenar", s: "The shower isn't [draining] properly.", mo: "Junho" },
+  { id: "seed-s2-building-up", w: "building up", m: "acumulando", s: "The water is [building up] in the sink.", mo: "Junho" },
+  { id: "seed-s2-complimentary", w: "complimentary", m: "cortesia, grátis", s: "The hotel offers [complimentary] breakfast.", mo: "Junho" },
+  { id: "seed-s2-bellboy", w: "bellboy", m: "carregador de malas", s: "The [bellboy] took our bags to the room.", mo: "Junho" },
+  { id: "seed-s2-when-possible", w: "when possible", m: "quando possível", s: "Please fix it [when possible].", mo: "Junho" },
+  // ─── Sessão 3 — Transporte e Navegação ───
+  { id: "seed-s3-get-around", w: "get around", m: "locomover-se", s: "We'll [get around] Tokyo mostly by train.", mo: "Junho" },
+  { id: "seed-s3-on-foot", w: "on foot", m: "a pé", s: "In Kyoto, we'll explore [on foot].", mo: "Junho" },
+  { id: "seed-s3-bound-for", w: "bound for", m: "com destino a", s: "This train is [bound for] Shin-Osaka.", mo: "Junho" },
+  { id: "seed-s3-belongings", w: "belongings", m: "pertences", s: "Keep your [belongings] with you at all times.", mo: "Junho" },
+  { id: "seed-s3-rapid-service", w: "rapid service", m: "serviço expresso", s: "Take the [rapid service] to skip small stops.", mo: "Junho" },
+  { id: "seed-s3-local-train", w: "local train", m: "trem que para em todas as estações", s: "The [local train] stops at every station.", mo: "Junho" },
+  { id: "seed-s3-the-following-train", w: "the following train", m: "o trem seguinte", s: "[The following train] goes to Kyoto.", mo: "Junho" },
+  { id: "seed-s3-complete-stop", w: "comes to a complete stop", m: "para completamente", s: "Wait until the train [comes to a complete stop].", mo: "Junho" },
+  { id: "seed-s3-transfer-at", w: "transfer at", m: "fazer conexão em", s: "I need to [transfer at] the next station.", mo: "Junho" },
+  { id: "seed-s3-miss-my-stop", w: "miss my stop", m: "perder minha parada", s: "I think I'm about to [miss my stop].", mo: "Junho" },
+  { id: "seed-s3-within-walking-distance", w: "within walking distance", m: "a uma distância caminhável", s: "The hotel is [within walking distance].", mo: "Junho" },
+  { id: "seed-s3-reserved-seats", w: "reserved seats", m: "assentos reservados", s: "We booked [reserved seats] on the Shinkansen.", mo: "Junho" },
+  { id: "seed-s3-platform", w: "platform", m: "plataforma", s: "Is this the right [platform] for Asakusa?", mo: "Junho" },
+  { id: "seed-s3-tap", w: "tap", m: "encostar (o cartão)", s: "Where do I [tap] my Suica card?", mo: "Junho" },
+  { id: "seed-s3-mostly", w: "mostly", m: "predominantemente", s: "We'll travel [mostly] by train.", mo: "Junho" },
+  { id: "seed-s3-aim-for", w: "aim for", m: "almejar, visar", s: "We [aim for] the morning departure.", mo: "Junho" },
+  { id: "seed-s3-sneaky-one", w: "sneaky one", m: "traiçoeiro", s: "That grammar rule is a [sneaky one].", mo: "Junho" },
+  { id: "seed-s3-realize", w: "realize", m: "perceber, entender", s: "I didn't [realize] the stop had changed.", mo: "Junho" },
+  { id: "seed-s3-previous", w: "previous", m: "anterior", s: "We reviewed the [previous] session first.", mo: "Junho" },
+  { id: "seed-s3-companion", w: "companion", m: "companheiro, companhia", s: "My travel [companion] booked the tickets.", mo: "Junho" },
+  { id: "seed-s3-heading-to", w: "heading to", m: "indo para", s: "This line is [heading to] downtown.", mo: "Junho" },
+  // ─── Revisão Mensal (Pessoal → ingles → junho) — itens ainda não no app ───
+  { id: "seed-rm-building-blocks", w: "building blocks", m: "peças de construção", s: "APIs are the [building blocks] of the platform.", mo: "Junho" },
+  { id: "seed-rm-thousands", w: "thousands", m: "milhares", s: "We process [thousands] of tickets each day.", mo: "Junho" },
+  { id: "seed-rm-due-to", w: "due to", m: "devido a, por causa de", s: "The outage was [due to] a config error.", mo: "Junho" },
+  { id: "seed-rm-on-the-other-hand", w: "on the other hand", m: "por outro lado", s: "[On the other hand], the manual process is safer.", mo: "Junho" },
+  { id: "seed-rm-accomplish", w: "accomplish", m: "alcançar, realizar", s: "We can [accomplish] this with automation.", mo: "Junho" },
+  { id: "seed-rm-assumptions", w: "assumptions", m: "suposições, deduções", s: "Let's validate our [assumptions] first.", mo: "Junho" },
+  { id: "seed-rm-feed", w: "feed", m: "alimentar", s: "We [feed] the data into the model.", mo: "Junho" },
+  { id: "seed-rm-no-big-deal", w: "no big deal", m: "não é um problema", s: "A small delay is [no big deal].", mo: "Junho" },
+  { id: "seed-rm-on-premises", w: "on premises", m: "no local, no próprio servidor", s: "The client still runs it [on premises].", mo: "Junho" },
+  { id: "seed-rm-sme", w: "subject matter expert", m: "especialista no assunto", s: "Ask the [subject matter expert] for details.", mo: "Junho" },
+  { id: "seed-rm-up-and-running", w: "up and running", m: "ativo e operante", s: "The server is [up and running] again.", mo: "Junho" },
+  { id: "seed-rm-schema", w: "schema", m: "esquema, estrutura de dados", s: "We updated the database [schema].", mo: "Junho" },
+  { id: "seed-rm-unreliable", w: "unreliable", m: "não confiável", s: "The old connector is [unreliable].", mo: "Junho" },
+  { id: "seed-rm-ongoing", w: "ongoing", m: "em andamento, ativo", s: "This is an [ongoing] initiative.", mo: "Junho" },
+  { id: "seed-rm-if-so", w: "if so", m: "se for o caso", s: "Is it urgent? [If so], page the team.", mo: "Junho" },
+  { id: "seed-rm-come-up-with", w: "come up with", m: "inventar, bolar", s: "We need to [come up with] a plan.", mo: "Junho" },
+  { id: "seed-rm-effectiveness", w: "effectiveness", m: "eficácia", s: "We measure the control's [effectiveness].", mo: "Junho" },
+  { id: "seed-rm-provider", w: "provider", m: "provedor", s: "The cloud [provider] had an outage.", mo: "Junho" },
+  { id: "seed-rm-supplier", w: "supplier", m: "fornecedor", s: "The [supplier] delivered the parts late.", mo: "Junho" },
+  { id: "seed-rm-opt", w: "opt", m: "optar, escolher", s: "You can [opt] for the manual flow.", mo: "Junho" },
+  { id: "seed-rm-even-with", w: "even with", m: "mesmo com", s: "[Even with] automation, errors still happen.", mo: "Junho" },
+  { id: "seed-rm-right-away", w: "right away", m: "de imediato", s: "Fix the breach [right away].", mo: "Junho" },
+  { id: "seed-rm-latter", w: "latter", m: "o segundo (mencionado)", s: "We chose the [latter] option.", mo: "Junho" },
+  { id: "seed-rm-lacking", w: "lacking", m: "faltando", s: "The report is [lacking] detail.", mo: "Junho" },
+  { id: "seed-rm-long-term", w: "long-term", m: "longo prazo", s: "This is a [long-term] investment.", mo: "Junho" },
+  { id: "seed-rm-least", w: "least", m: "mínimo", s: "Pick the path of [least] resistance.", mo: "Junho" },
+  { id: "seed-rm-last-but-not-least", w: "last but not least", m: "por último, mas não menos importante", s: "[Last but not least], document everything.", mo: "Junho" },
+  { id: "seed-rm-so-far-so-good", w: "so far so good", m: "até agora, tudo bem", s: "We deployed twice — [so far so good].", mo: "Junho" },
+  { id: "seed-rm-rise", w: "rise", m: "subir, aumentar", s: "Costs [rise] every quarter.", mo: "Junho" },
 ];
 
 const MONTHS = ["Março", "Abril", "Maio", "Junho"];
@@ -436,6 +572,185 @@ const DICAS = [
       { title: "oo = u", body: "look, book = som de \"u\". Exceções: blood, flood (som de ô).", speak: "look" },
       { title: "au / aw = ó", body: "law, flaw, raw, Austin — som de \"ó\".", speak: "flaw" },
       { title: "\"a\" no meio de 3 letras = é", body: "cap, gap, task, flash — som de \"é\". O \"r\" quebra a regra (car, bar).", speak: "task" },
+    ],
+  },
+  {
+    group: "Sufixos e terminações",
+    items: [
+      { title: "TY → DADE", body: "99% das palavras terminadas em \"TY\" viram \"DADE\" em PT. Ex: city = cidade, scalability = escalabilidade, ability = habilidade." },
+      { title: "CY → CIA", body: "Terminou em \"CY\", em PT vira \"CIA\". Ex: consistency = consistência." },
+      { title: "LITY → LIDADE", body: "Ex: mobility = mobilidade." },
+      { title: "GY → GIA", body: "Ex: energy = energia, methodology = metodologia, synergy = sinergia." },
+      { title: "LY → MENTE", body: "Advérbios: clearly = claramente, seamlessly = perfeitamente." },
+      { title: "ING → NDO", body: "Ex: doing = fazendo, ensuring = garantindo, assegurando." },
+      { title: "IZED → IZADO", body: "Ex: crystalized = cristalizado. Pronúncia do final: \"aizd\"." },
+      { title: "FY → -ficar", body: "Tem o sentido de \"fazer ficar\". Ex: identify = identificar." },
+      { title: "ARCHY → ARQUIA", body: "Sempre que aparecer \"archy\". Ex: hierarchy = hierarquia." },
+      { title: "ABLE → ÁVEL", body: "Ex: configurable = configurável. A palavra \"able\" (capaz) sozinha não conta." },
+      { title: "ABLY → AVELMENTE", body: "Ex: inevitably = inevitavelmente." },
+      { title: "ED = passado (80%)", body: "O \"ED\" no final indica passado na maioria dos casos. Ex: fertilized = fertilizado." },
+      { title: "ED + c/s = som de T", body: "Quando o \"ED\" vem depois de \"c\" ou \"s\", soa como \"t\". Ex: placed = \"pleisst\"." },
+      { title: "T final = passado (irregulares)", body: "build → built (construído); send → sent (enviado). Ex: built on this system / message sent." },
+      { title: "RE / ER / IR = som de \"Ôr\"", body: "future, picture, player, mister. Também no fim de service, firmware.", speak: "future" },
+      { title: "IRE = \"ÁIÔR\"", body: "fire, tire, require, desire, Ireland.", speak: "require" },
+    ],
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SESSÕES — explicações das aulas do Plano de Estudo Individual (aba CLAUDE)
+// ─────────────────────────────────────────────────────────────────────────────
+const SESSIONS = [
+  {
+    id: "s1",
+    title: "Sessão 1 — Aeroporto e Imigração",
+    date: "08/06",
+    intro: "Descrever o roteiro, chunking de frases de aeroporto, role-play de imigração e check-in, e escuta de anúncios.",
+    groups: [
+      {
+        kind: "corrections",
+        title: "Correções",
+        items: [
+          { wrong: "we will departure", right: "we will depart", note: "'departure' é substantivo; o verbo é 'depart'. Ou: we're flying out of Rio." },
+          { wrong: "we will part ways to Kyoto", right: "we move on to Kyoto", note: "'part ways' = se separar de pessoas, não mudar de cidade." },
+          { wrong: "to know his culture", right: "to experience the culture", note: "'know' soa como memorizar; e país é 'its', não 'his'." },
+          { wrong: "his parents", right: "her parents", note: "Use o gênero certo ao se referir à namorada." },
+          { wrong: "my return ticket is on July 20th", right: "I fly back on July 20th", note: "O voo tem data, o ticket não." },
+          { wrong: "in July 1", right: "on July 1st", note: "Datas usam 'on'. 'In' é só para mês ou ano sozinho." },
+        ],
+      },
+      {
+        kind: "rules",
+        title: "Vocabulário e regras",
+        items: [
+          { title: "carry-on", body: "Bagagem de mão, vai dentro do avião. Pronúncia: CARE-ee-on.", speak: "carry-on" },
+          { title: "aisle (EYE-ul)", body: "Corredor do avião — o 'l' é mudo. aisle seat / window seat / middle seat.", speak: "aisle" },
+          { title: "return / round-trip ticket", body: "Passagem de volta — prova na imigração que você vai sair do país." },
+          { title: "wheelchair (WEEL-chair)", body: "Cadeira de rodas. Pergunte: Is there wheelchair assistance available?", speak: "wheelchair" },
+          { title: "aircraft", body: "Aeronave — termo técnico e formal de aviação.", speak: "aircraft" },
+          { title: "paging", body: "Chamar alguém pelo alto-falante: paging passenger X.", speak: "paging" },
+          { title: "here you go / here it is", body: "Mais natural que 'that's here' ao entregar algo." },
+        ],
+      },
+      {
+        kind: "phrases",
+        title: "Frases úteis",
+        items: [
+          "I'd like to check in for my flight to Tokyo.",
+          "I have one bag to check and one carry-on.",
+          "I'd prefer an aisle seat, please.",
+          "I have a round-trip ticket.",
+          "I'm here for tourism. I'll be staying for 8 days.",
+          "I'm the paged passenger.",
+          "Is there a lounge I can access with my ticket?",
+        ],
+      },
+    ],
+  },
+  {
+    id: "s2",
+    title: "Sessão 2 — Hotels & Check-in",
+    date: "09/06",
+    intro: "Vocabulário de hotel, cenários de check-in, reportar problema e escuta de diálogos.",
+    groups: [
+      {
+        kind: "corrections",
+        title: "Correções",
+        items: [
+          { wrong: "2 differents hotels", right: "2 different hotels", note: "Adjetivos não vão para o plural em inglês (nunca 'differents')." },
+          { wrong: "its close to", right: "it's close to", note: "its = posse; it's = it is." },
+          { wrong: "the bed isn't unmade", right: "the bed isn't made", note: "Dupla negação se cancela." },
+          { wrong: "thanks for your supporting", right: "thanks for your help", note: "'support' não serve em atendimento — use 'help'." },
+          { wrong: "localize", right: "located / right next to", note: "Falso cognato — 'localizar' não é 'localize'." },
+          { wrong: "we go to stay", right: "we're going to stay", note: "Futuro com 'going to' precisa da forma completa." },
+          { wrong: "witch", right: "which", note: "witch = bruxa; which = pronome relativo." },
+          { wrong: "mais attractions", right: "main attractions", note: "Interferência do português." },
+        ],
+      },
+      {
+        kind: "rules",
+        title: "Vocabulário e regras",
+        items: [
+          { title: "complimentary", body: "Grátis / cortesia (oferecido pelo hotel)." },
+          { title: "when possible", body: "Quando possível — sinaliza baixa urgência." },
+          { title: "bellboy", body: "Carregador de bagagem do hotel." },
+          { title: "draining / building up", body: "draining = escoar; building up = acumulando. Chunk: the shower isn't draining properly." },
+          { title: "Foco da próxima sessão", body: "Travar its vs it's e 'adjetivos não pluralizam' — erros recorrentes." },
+        ],
+      },
+      {
+        kind: "phrases",
+        title: "Frases úteis",
+        items: [
+          "I have a reservation under the name...",
+          "It should be a king-size room for two nights.",
+          "Could we get an early check-in?",
+          "Is breakfast included?",
+          "The air conditioning in our room isn't working.",
+          "The shower isn't draining properly.",
+          "I'd like to speak with the manager, please.",
+          "We'd like to check out. Can I get the bill?",
+          "Thank you, I appreciate it.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "s3",
+    title: "Sessão 3 — Transporte e Navegação",
+    date: "11/06",
+    intro: "Como se locomover no Japão, chunking de transporte, role-play de comprar bilhete e pedir direção, e escuta de anúncios de trem.",
+    groups: [
+      {
+        kind: "corrections",
+        title: "Correções",
+        items: [
+          { wrong: "my trip in Japan", right: "my trip to Japan", note: "Viaja-se 'to' um destino." },
+          { wrong: "I plan get around", right: "I plan to get around", note: "plan + to + verbo (sempre)." },
+          { wrong: "mostly in train", right: "mostly by train", note: "Meio de transporte vai com 'by' (by train, by bus)." },
+          { wrong: "in my trip", right: "on my trip", note: "Expressão fixa: on a trip / on vacation." },
+          { wrong: "we will to stay", right: "we will stay", note: "will + verbo base, sem 'to'." },
+          { wrong: "locomove", right: "get around / move around", note: "Falso cognato ('locomover')." },
+          { wrong: "trains stations", right: "train stations", note: "Noun compound: o primeiro substantivo fica singular." },
+          { wrong: "is normal in visit", right: "is normal when visiting", note: "Preposição + -ing, ou when + -ing." },
+          { wrong: "trust in this 2 apps", right: "rely on these 2 apps", note: "rely on para ferramentas; these no plural." },
+          { wrong: "depart at morning", right: "depart in the morning", note: "Período do dia vai com 'in the' (exceção: at night)." },
+          { wrong: "go at Kyoto Hotel", right: "go to the Kyoto Hotel", note: "Movimento vai com 'to'; nome de hotel leva 'the'." },
+          { wrong: "for what exit we would like take", right: "which exit should we take", note: "Ordem correta da pergunta." },
+        ],
+      },
+      {
+        kind: "rules",
+        title: "Vocabulário e regras",
+        items: [
+          { title: "Ordem da pergunta", body: "question word + auxiliar + sujeito + verbo. Ex: Which exit should we take? / What time does it leave? / Where do I transfer?" },
+          { title: "by + transporte", body: "by train, by bus, by subway." },
+          { title: "to + destino", body: "go to the hotel, get to Kyoto." },
+          { title: "in the + período do dia", body: "in the morning/afternoon/evening. Exceção: at night." },
+          { title: "on + trip / vacation", body: "on my trip, on vacation (expressões fixas)." },
+          { title: "will + verbo base", body: "we will stay (nunca 'will to stay')." },
+          { title: "noun compounds", body: "train station, hotel room — o primeiro substantivo fica singular." },
+          { title: "bound for / belongings", body: "bound for = com destino a; belongings = pertences." },
+          { title: "rapid/express vs local", body: "rapid/express pula estações pequenas; local para em todas." },
+          { title: "Takkyubin", body: "Serviço de envio de bagagem, não trem: We might use Takkyubin to forward our luggage." },
+        ],
+      },
+      {
+        kind: "phrases",
+        title: "Frases úteis",
+        items: [
+          "How do I get to ___?",
+          "Which line do I take (from here)?",
+          "Is this the right platform for ___?",
+          "Does this train stop at ___?",
+          "Where do I tap my Suica card?",
+          "I think I missed my stop.",
+          "How many stops is it from here?",
+          "I need to transfer at ___.",
+          "Which exit should I take?",
+          "Is it within walking distance?",
+        ],
+      },
     ],
   },
 ];
@@ -792,6 +1107,9 @@ function App() {
           <TabBtn active={tab === "dicas"} onClick={() => setTab("dicas")}>
             <Sparkles size={14} /> Dicas
           </TabBtn>
+          <TabBtn active={tab === "claude"} onClick={() => setTab("claude")}>
+            <Pencil size={14} /> CLAUDE
+          </TabBtn>
           <TabBtn active={tab === "add"} onClick={() => setTab("add")}>
             <Plus size={14} /> Adicionar
           </TabBtn>
@@ -810,6 +1128,7 @@ function App() {
           {tab === "notes" && <NotesView words={state.words.filter((w) => w.inNotes)} startSession={() => startSession("Notes", "flashcard", false)} removeFromNotes={(id) => updateWords((words) => words.map((w) => (w.id === id ? { ...w, inNotes: false } : w)))} />}
           {tab === "all" && <AllWordsView words={state.words} updateWords={updateWords} />}
           {tab === "dicas" && <DicasView />}
+          {tab === "claude" && <ClaudeView />}
           {tab === "add" && <AddWordView onAdd={(w) => updateWords((words) => [...words, w])} />}
         </div>
       </main>
@@ -1553,6 +1872,105 @@ function DicasView() {
                     <p style={{ fontFamily: "var(--body)", fontSize: "0.86rem", color: "var(--ink-muted)", marginTop: "0.4rem", lineHeight: 1.55 }}>
                       {it.body}
                     </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CLAUDE VIEW — explicações por sessão (correções, regras, frases úteis)
+// ─────────────────────────────────────────────────────────────────────────────
+function ClaudeView() {
+  const [open, setOpen] = useState(() => {
+    const o = {}; SESSIONS.forEach((s, i) => { o[s.id] = i === 0; }); return o;
+  });
+  const toggle = (id) => setOpen((p) => ({ ...p, [id]: !p[id] }));
+
+  return (
+    <div>
+      <SectionTitle>Sessões com o Claude</SectionTitle>
+      <h2 style={{ fontFamily: "var(--display)", fontSize: "2rem", fontWeight: 500, color: "var(--ink)", marginTop: "0.3rem", lineHeight: 1 }}>
+        Explicações por sessão
+      </h2>
+      <p style={{ fontFamily: "var(--body)", color: "var(--ink-muted)", marginTop: "0.5rem", fontSize: "0.9rem", maxWidth: "48ch" }}>
+        Correções, regras e frases úteis de cada aula do Plano de Estudo Individual. O vocabulário dessas sessões já está nos flashcards de Junho.
+      </p>
+
+      <div className="mt-6 space-y-3">
+        {SESSIONS.map((s) => (
+          <div key={s.id} style={{ border: "1px solid var(--line)", borderRadius: "2px", background: "var(--surface)" }}>
+            <button onClick={() => toggle(s.id)} className="w-full text-left px-5 py-4 flex items-center justify-between gap-3">
+              <div>
+                <h3 style={{ fontFamily: "var(--display)", fontSize: "1.2rem", fontWeight: 500, color: "var(--accent)", fontStyle: "italic" }}>
+                  {s.title}
+                </h3>
+                <div style={{ fontFamily: "var(--mono)", fontSize: "0.72rem", color: "var(--ink-muted)", marginTop: "2px" }}>{s.date}</div>
+              </div>
+              <ChevronRight size={16} style={{ color: "var(--ink-muted)", flexShrink: 0, transform: open[s.id] ? "rotate(90deg)" : "none", transition: "transform 0.2s" }} />
+            </button>
+
+            {open[s.id] && (
+              <div className="px-5 pb-5 reveal">
+                {s.intro && (
+                  <p style={{ fontFamily: "var(--body)", fontSize: "0.86rem", color: "var(--ink-muted)", lineHeight: 1.55, fontStyle: "italic" }}>{s.intro}</p>
+                )}
+                {s.groups.map((g) => (
+                  <div key={g.title} className="mt-5">
+                    <div style={{ fontFamily: "var(--body)", fontSize: "0.72rem", fontWeight: 600, color: "var(--ink-muted)", textTransform: "uppercase", letterSpacing: "0.15em" }}>
+                      {g.title}
+                    </div>
+
+                    {g.kind === "corrections" && (
+                      <div className="space-y-2 mt-3">
+                        {g.items.map((it, i) => (
+                          <div key={i} className="p-3" style={{ background: "var(--bg)", border: "1px solid var(--line)", borderRadius: "2px" }}>
+                            <div style={{ fontFamily: "var(--body)", fontSize: "0.95rem" }}>
+                              <span style={{ color: "var(--accent)", textDecoration: "line-through" }}>{it.wrong}</span>
+                              <span style={{ color: "var(--ink-muted)" }}> → </span>
+                              <span style={{ color: "var(--success)", fontWeight: 600 }}>{it.right}</span>
+                            </div>
+                            <div style={{ fontFamily: "var(--body)", fontSize: "0.82rem", color: "var(--ink-muted)", marginTop: "0.25rem", lineHeight: 1.5 }}>{it.note}</div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {g.kind === "rules" && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                        {g.items.map((it) => (
+                          <div key={it.title} className="p-4" style={{ background: "var(--bg)", border: "1px solid var(--line)", borderRadius: "2px" }}>
+                            <div className="flex items-center justify-between gap-2">
+                              <div style={{ fontFamily: "var(--mono)", fontSize: "0.9rem", fontWeight: 500, color: "var(--ink)" }}>{it.title}</div>
+                              {it.speak && (
+                                <button onClick={() => speak(it.speak)} className="p-1 hover:opacity-70 flex-shrink-0" style={{ color: "var(--accent)" }} title="Ouvir">
+                                  <Volume2 size={15} />
+                                </button>
+                              )}
+                            </div>
+                            <p style={{ fontFamily: "var(--body)", fontSize: "0.85rem", color: "var(--ink-muted)", marginTop: "0.4rem", lineHeight: 1.55 }}>{it.body}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {g.kind === "phrases" && (
+                      <div className="space-y-1 mt-3">
+                        {g.items.map((p, i) => (
+                          <div key={i} className="flex items-center gap-2 px-3 py-2" style={{ background: "var(--bg)", border: "1px solid var(--line)", borderRadius: "2px" }}>
+                            <button onClick={() => speak(p.replace(/_/g, ""))} className="p-1 hover:opacity-70 flex-shrink-0" style={{ color: "var(--accent)" }} title="Ouvir">
+                              <Volume2 size={14} />
+                            </button>
+                            <span style={{ fontFamily: "var(--body)", fontSize: "0.92rem", color: "var(--ink)" }}>{p}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
